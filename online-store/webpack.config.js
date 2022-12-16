@@ -16,12 +16,15 @@ module.exports = {
     open: true,
     hot: false,
   },
-  entry: ['@babel/polyfill', path.resolve(__dirname, 'src', 'index.ts')],
+  entry: "./src/index.ts",
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
     filename: '[name].[contenthash].js',
     assetModuleFilename: 'assets/[name][ext]'
+  },
+  resolve: {
+    extensions: [".txs", ".ts", ".js"],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -38,7 +41,7 @@ module.exports = {
         loader: 'html-loader',
       },
       {
-        test: /.ts$/i,
+        test: /\.tsx?$/i,
         exclude: /node_modules/,
         loader: 'ts-loader',
       },
