@@ -2,13 +2,17 @@ body{
     background-color: rgb(170, 51, 111);
 }
 
-.container {
+.container{
     display: flex;
+    flex-direction: column;
     width: 80%; // Del
     height: 1000px; // Del
     margin: 40px auto 40px auto;
     background-color: #fff;
     border-radius: 20px;
+    .page{
+        width: 100%;
+    }
     .main-page{
         margin: 40px auto;
         width: 80%;

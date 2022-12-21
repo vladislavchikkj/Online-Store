@@ -1,6 +1,6 @@
 import Component from "../templates/components";
-import { PageIds } from '../../app';
-
+import { PageIds } from '../../core/wrapComponents';
+import Page from "../templates/page";
 const Buttons = [
     {
         id: PageIds.MainPage,
@@ -29,7 +29,7 @@ class Header extends Component {
     }
 
     render() {
-        this.renderPageButtons();
+        this.renderPageButtons()
         return this.container;
     }
 }

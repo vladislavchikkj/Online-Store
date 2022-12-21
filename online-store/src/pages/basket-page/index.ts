@@ -11,7 +11,7 @@ class BasketPage extends Page {
     }
 
     render() {
-        const title = this.createHeaderTitle(BasketPage.TextObgect.MainTitle)
+        const title = this.createPage(BasketPage.TextObgect.MainTitle)
         this.container.append(title);
         return this.container;
     }

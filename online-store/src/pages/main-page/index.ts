@@ -1,10 +1,8 @@
-import  Page from '../core/templates/page'
-
+import  Page from '../core/templates/page';
 
 class MainPage extends Page{
     static TextObgect = {
-        MainTitle: `<div class="container">
-        <div class="main-page">
+        MainTitle: `
           <div class="main-page__box">
             Online-store
             <div class="btn">В каталог</div>
@@ -38,11 +36,36 @@ class MainPage extends Page{
                 <div class="decsr">descr</div>
               </div>
             </div>
-            
+            <div class="catalog__item">
+              <img src="http://cdn.onlinewebfonts.com/svg/img_62296.png" alt="item-logo">
+              <div class="wrapper-text">
+                <div class="name-item">Name Item</div>
+                <div class="decsr">descr</div>
+              </div>
+            </div>
+            <div class="catalog__item">
+              <img src="http://cdn.onlinewebfonts.com/svg/img_62296.png" alt="item-logo">
+              <div class="wrapper-text">
+                <div class="name-item">Name Item</div>
+                <div class="decsr">descr</div>
+              </div>
+            </div>
+            <div class="catalog__item">
+              <img src="http://cdn.onlinewebfonts.com/svg/img_62296.png" alt="item-logo">
+              <div class="wrapper-text">
+                <div class="name-item">Name Item</div>
+                <div class="decsr">descr</div>
+              </div>
+            </div>
+            <div class="catalog__item">
+              <img src="http://cdn.onlinewebfonts.com/svg/img_62296.png" alt="item-logo">
+              <div class="wrapper-text">
+                <div class="name-item">Name Item</div>
+                <div class="decsr">descr</div>
+              </div>
+            </div>
           </div>
-        </div>
-          
-      </div>`,
+        `,
     };
 
     constructor(id: string) {
@@ -52,8 +75,8 @@ class MainPage extends Page{
 
 
     render() {
-        const title = this.createHeaderTitle(MainPage.TextObgect.MainTitle);
-        this.container.append(title);
+        const page = this.createPage(MainPage.TextObgect.MainTitle);
+        this.container.append(page);
         return this.container;
     }
 }
