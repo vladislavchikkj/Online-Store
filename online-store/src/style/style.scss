@@ -6,25 +6,23 @@ body{
     display: flex;
     flex-direction: column;
     width: 80%; // Del
-    height: 1000px; // Del
+    // height: 1000px; // Del
     margin: 40px auto 40px auto;
     background-color: #fff;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.36);
     border-radius: 20px;
-    .page{
-        width: 100%;
-    }
+    position: relative;
     .main-page{
         margin: 40px auto;
         width: 80%;
-        height: 500px;
         padding: 20px;
-        position: relative;
         &__box{
             width: 100%;
-            height: 100%;
+            height: 500px;
             padding: 40px;
             background-color: rgb(243 243 243); // const
             font-size: 40px;
+            position: relative;
             .btn{
                 display: flex;
                 position: absolute;
@@ -39,6 +37,7 @@ body{
                 cursor: pointer;
 
             }
+            
         }
         .catalog{
             padding-top: 40px;
@@ -68,6 +67,20 @@ body{
             }
         }
     }
+}
+.btn-catalog{
+    display: flex;
+    width: 150px;
+    height: 50px;
+    font-size: 17px;
+    background-color: rgb(170, 51, 111);
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    bottom: 50px;  
+    text-decoration: none;             
+    cursor: pointer;
+
 }
 
 // component header style
@@ -108,7 +121,7 @@ $main-page-width: 1000px;
 
     &__container{
         width: 100%;
-        max-width: $main-page-width;
+        max-width: 80%;
         height: 100%;
 
         display: flex;
@@ -119,13 +132,13 @@ $main-page-width: 1000px;
 
         border-bottom: 1px solid gray;
         border-radius: 0%;
+        box-shadow:none;
     }
     &__page-title{
+        cursor: pointer;
         font-size: 2em;
-        margin: 0.67em 0;
         text-decoration: none;
         color: black;
-        font-weight: bold;
     }
 
 }

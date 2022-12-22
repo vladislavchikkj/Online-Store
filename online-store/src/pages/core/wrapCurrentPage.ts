@@ -1,10 +1,12 @@
 import Page from './templates/page';
 import MainPage from "../main-page";
 import BasketPage from "../basket-page";
+import CatalogPage from '../catalog-page';
 
 export const enum PageIds {
     MainPage = 'main-page',
     BasketPage = 'basket-page',
+    CatalogPage = 'catalog-page'
 }
 
 class WrapComp {
@@ -26,6 +28,9 @@ class WrapComp {
             page = new MainPage(idPage)
         } else if (idPage === PageIds.BasketPage) {
             page = new BasketPage(idPage);
+        }
+         else if (idPage === PageIds.CatalogPage) {
+            page = new CatalogPage(idPage);
         }
 
         if(page){

@@ -1,6 +1,5 @@
 import Component from "../templates/components";
 import { PageIds } from '../../core/wrapCurrentPage';
-import Page from "../templates/page";
 const Buttons = [
     {
         id: PageIds.MainPage,
@@ -9,6 +8,10 @@ const Buttons = [
     {
         id: PageIds.BasketPage,
         text: 'Basket-page',
+    },
+    {
+        id: PageIds.CatalogPage,
+        text: 'Catalog',
     },
 ];
 console.log(Buttons[0].text);
@@ -20,7 +23,7 @@ class Header extends Component {
         super(tagName, classNmae);
     }
 
-    renderPageButtons() {
+    renderHeaderElement() {
         const pageButtons = document.createElement('div');
         pageButtons.className = 'container header__container';
         
@@ -40,14 +43,20 @@ class Header extends Component {
             buttonBasket.className = 'card card_active'
             buttonBasket.href = `#${Buttons[1].id}`;
 
+            const button2Basket = document.createElement('a');
+            button2Basket.className = 'btn-catalog'
+            button2Basket.innerText = Buttons[2].text;
+            button2Basket.href = `#${Buttons[2].id}`;
+
             pageButtons.append(buttonMain);
             pageButtons.append(formHeader);
             pageButtons.append(buttonBasket);
+            pageButtons.append(button2Basket);
         this.container.append(pageButtons)
     }
 
     render() {
-        this.renderPageButtons()
+        this.renderHeaderElement()
         return this.container;
     }
 }
