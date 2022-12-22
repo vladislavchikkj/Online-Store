@@ -8,7 +8,7 @@ class Footer extends Component {
 
     renderPageButtons() {
         const pageButtons = document.createElement('div');
-        pageButtons.innerText = 'Footer'
+        pageButtons.innerText = ''
         this.container.append(pageButtons)
     }
 
