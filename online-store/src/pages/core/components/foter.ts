@@ -8,7 +8,7 @@ class Footer extends Component {
 
     renderPageButtons() {
         const pageButtons = document.createElement('div');
-        pageButtons.innerText = ''
+        pageButtons.innerText = 'Online Store 2023'
         this.container.append(pageButtons)
     }
 
