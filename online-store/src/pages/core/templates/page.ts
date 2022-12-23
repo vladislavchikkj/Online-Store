@@ -10,7 +10,7 @@ abstract class Page {
 
     protected createPage(text: string) {
         const page = document.createElement('div');
-        page.className += "main-page";
+        page.className += this.container.id;
         page.innerHTML = text;
         return page;
     }

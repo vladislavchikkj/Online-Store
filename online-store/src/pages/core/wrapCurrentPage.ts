@@ -25,13 +25,13 @@ class WrapComp {
         let page: Page | null = null;
         
         if(idPage === PageIds.MainPage){
-            page = new MainPage(idPage)
+            page = new MainPage(idPage);
         } else if (idPage === PageIds.BasketPage) {
             page = new BasketPage(idPage);
         }
-         else if (idPage === PageIds.CatalogPage) {
-            page = new CatalogPage(idPage);
-        }
+        else if (idPage === PageIds.CatalogPage) {
+             page = new CatalogPage(idPage)
+        } // Поменять местами с CatalogPage
 
         if(page){
             const pageHTML = page.render();
