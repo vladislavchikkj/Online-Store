@@ -6,14 +6,15 @@ class Footer extends Component {
         super(tagName, className);
     }
 
-    renderPageButtons() {
-        const pageButtons = document.createElement('div');
-        pageButtons.innerText = 'Online Store 2023'
-        this.container.append(pageButtons)
+    renderFooter() {
+        const pageFooter = document.createElement('div');
+        pageFooter.innerText = 'Online Store 2023'
+        pageFooter.className = 'footer__container'
+        this.container.append(pageFooter)
     }
 
     render() {
-        this.renderPageButtons()
+        this.renderFooter()
         return this.container;
     }
 }
