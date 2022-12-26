@@ -32,7 +32,7 @@ class WrapComp {
         }
         else if (idPage === PageIds.CatalogPage) {
              page = new CatalogPage(idPage)
-        } // Поменять местами с CatalogPage
+        } 
         else {
             page = new ErrorPage(idPage, '404')
         }
@@ -46,14 +46,14 @@ class WrapComp {
     }
 
     private enableRouteChange() {
-        let localItem = window.location.hash.slice(1);
-        console.log(localItem);
         window.addEventListener('hashchange', () => {
-            this.hash = window.location.hash.slice(1);
-            console.log(this.hash);
-            WrapComp.renderNewPage(this.hash)
+            this.getPrivateHash();
+            WrapComp.renderNewPage(this.hash);
             
         })
+    }
+    private getPrivateHash() {
+        this.hash = window.location.hash.slice(1);
     }
 
     constructor() {
@@ -68,9 +68,12 @@ class WrapComp {
     }
 
 
+
     renderWrapApp() {
-        WrapComp.renderNewPage(this.hash);
+        this.getPrivateHash();
         this.enableRouteChange();
+        console.log('Этот' , this.hash);
+        WrapComp.renderNewPage(this.hash);
         return WrapComp.container;
     }
 

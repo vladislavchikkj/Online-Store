@@ -9,6 +9,7 @@ class Product  {
       this.type = type;
       this.data = null;
     }
+    
   
     async fetchData() {
       this.isLoading = true;
