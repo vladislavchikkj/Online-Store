@@ -1,22 +1,26 @@
-// import Page from '../core/templates/page';
+import Page from "../core/templates/page";
 
-// class ErrorPage extends Page {
-//     private errorType: string;
+export const enum ErrorTypes {
+  Error_404 = 404,
+}
 
-//     static TextObject: { [prop: string]: string } = {
-//         '404': 'Error! The page was not found.'
-//     };
+class ErrorPage extends Page {
+  private errorType: ErrorTypes | string;
 
-//     constructor(id: string, errorType: string) {
-//         super(id);
-//         this.errorType = errorType;
-//     }
+  static TextObject: { [prop: string]: string } = {
+    '404': 'Error! The page was not found.'
+  };
 
-//     render() {
-//         const title = this.createHeaderTitle(ErrorPage.TextObgect[this.errorType]);
-//         this.container.append(title);
-//         return this.container;
-//     }
-// }
+  constructor(id: string, errorType: ErrorTypes | string) {
+    super(id);
+    this.errorType = errorType;
+  }
 
-// export default ErrorPage;
+  render() {
+    const title = this.createPage(ErrorPage.TextObject[this.errorType]);
+    this.container.append(title);
+    return this.container;
+  }
+}
+
+export default ErrorPage;
