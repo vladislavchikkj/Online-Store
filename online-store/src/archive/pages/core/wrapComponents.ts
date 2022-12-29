@@ -7,9 +7,8 @@ class WrapApp {
     protected static container: HTMLElement;
     static TextObgect = {};
     private header: Header;
-    private footer: Footer;
     private wrapComp: WrapComp;
-
+    private footer: Footer;
 
 
     constructor() {
