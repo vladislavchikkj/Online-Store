@@ -1,7 +1,11 @@
 type critery = {
+    label: string,
     name: string,
     type: string,
-    variants?: string[],
+    variants?: {
+        label: string,
+        name: string,
+    }[],
     range?: { from: number, to: number },
 }
 
@@ -9,14 +13,30 @@ type critery = {
 export class Filter {
     private categories: critery[] = [
         {
-            name: `Производители`,
+            label: `Производители`,
+            name: `manufacturers`,
             type: `categories`,
-            variants: [`lenovo`]
+            variants: [
+                {
+                    label: `Lenovo`,
+                    name: `lenovo`,
+                },
+                {
+                    label: `MSI`,
+                    name: `msi`,
+                },
+            ]
         },
         {
-            name: `Производители`,
+            label: `Производители`,
+            name: `manufacturers`,
             type: `categories`,
-            variants: [`lenovo`]
+            variants: [
+                {
+                    label: `lenovo`,
+                    name: `lenovo`,
+                },
+            ]
         },
     ];
 
@@ -28,16 +48,40 @@ export class Filter {
         this.container = place.querySelector('.filter') as HTMLElement;
 
         this.generateGroup();
+
+        this.enableHandler();
     }
     generate() {
-        return `<aside class="filter"></aside>`;
+        return `<form class="filter" name = "filter"></form>`;
     }
     enableHandler() {
         this.container.addEventListener('click', (e) => {
             const targer = e.target as HTMLElement;
 
-            const category = (targer.closest('.filter__etem') as HTMLElement).dataset.category;
+            const element = targer.closest('.filter__item input[type="checkbox"]') as HTMLInputElement;
+
+            if (element) {
+                const category = element.name;
+                const value = element.value;
+                const checked = element.checked;
+
+                let inputs: HTMLInputElement[] = Array.from(this.container.querySelectorAll('input[type="checkbox"]'));
+                inputs = inputs.filter((checkbox) => checkbox.checked);
+
+
+                console.log(inputs.map((checkbox) => {
+                    return {
+                        'name': checkbox.name,
+                        'value': checkbox.value,
+                    }
+                }));
+            }
         });
+
+
+
+
+
     }
 
     generateGroup() {
@@ -46,7 +90,7 @@ export class Filter {
 
             this.container.innerHTML += `
                 <div class="filter__block">
-                    <h3 class="filter__title">${item.name}</h3>
+                    <h3 class="filter__title">${item.label}</h3>
                     <div div class="${type}"> </div>
                 </div>
             `;
@@ -56,8 +100,8 @@ export class Filter {
                     container.innerHTML += `
                         <div class="filter__item">
                             <label>
-                                <input type="checkbox" name="lenovo" id="proizvoditel">
-                                ${variant}
+                                <input type="checkbox" name="${item.name}" value="${variant.name}">
+                                ${variant.label}
                             </label>
                             <p>(5/5)</p>
                         </div>
