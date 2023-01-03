@@ -2,7 +2,6 @@ export class Header {
 
     constructor(place: HTMLElement, lang: string = "ru") {
         place.innerHTML += this.render();
-
     }
 
     render() {

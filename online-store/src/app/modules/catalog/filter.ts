@@ -1,3 +1,6 @@
+import { IFilterCollection, Iproduct } from "../../interfaces/interfaces";
+import { product } from "../../interfaces/interfaces";
+
 type critery = {
     label: string,
     name: string,
@@ -13,34 +16,48 @@ type critery = {
 export class Filter {
     private categories: critery[] = [
         {
-            label: `Производители`,
-            name: `manufacturers`,
+            label: `Брэнды`,
+            name: `brand`,
             type: `categories`,
             variants: [
                 {
-                    label: `Lenovo`,
-                    name: `lenovo`,
+                    label: `Apple`,
+                    name: `Apple`,
                 },
                 {
-                    label: `MSI`,
-                    name: `msi`,
+                    label: `Huawei`,
+                    name: `Huawei`,
                 },
+                {
+                    label: `Samsung`,
+                    name: `Samsung`,
+                },
+                {
+                    label: `OPPO`,
+                    name: `OPPO`,
+                },
+
             ]
         },
         {
-            label: `Производители`,
-            name: `manufacturers`,
+            label: `Не Брэнды`,
+            name: `not brand`,
             type: `categories`,
             variants: [
                 {
-                    label: `lenovo`,
-                    name: `lenovo`,
+                    label: `Apple`,
+                    name: `Apple`,
+                },
+                {
+                    label: `Huavei`,
+                    name: `Huavei`,
                 },
             ]
         },
     ];
 
     private container: HTMLElement;
+    private filters: IFilterCollection = {};
 
     constructor(place: HTMLElement) {
         place.innerHTML += this.generate();
@@ -51,37 +68,45 @@ export class Filter {
 
         this.enableHandler();
     }
-    generate() {
+    generate(): string {
         return `<form class="filter" name = "filter"></form>`;
     }
-    enableHandler() {
+    enableHandler(): void {
         this.container.addEventListener('click', (e) => {
-            const targer = e.target as HTMLElement;
-
-            const element = targer.closest('.filter__item input[type="checkbox"]') as HTMLInputElement;
+            const element = (e.target as HTMLElement).closest<HTMLInputElement>('input[type="checkbox"]');
 
             if (element) {
-                const category = element.name;
-                const value = element.value;
-                const checked = element.checked;
+                const input = Array.from(document.querySelectorAll<HTMLInputElement>('[type="checkbox"]'))
+                    .filter((checkbox) => checkbox.checked)
+                    .map((checkbox) => {
+                        return {
+                            name: checkbox.name,
+                            value: checkbox.value,
+                        }
+                    });
 
-                let inputs: HTMLInputElement[] = Array.from(this.container.querySelectorAll('input[type="checkbox"]'));
-                inputs = inputs.filter((checkbox) => checkbox.checked);
+                this.filters = {};
 
+                input.forEach(checkbox => {
+                    if (!this.filters[checkbox.name]) this.filters[checkbox.name] = [];
+                    this.filters[checkbox.name].push(checkbox.value);
+                });
 
-                console.log(inputs.map((checkbox) => {
-                    return {
-                        'name': checkbox.name,
-                        'value': checkbox.value,
-                    }
+                this.container.dispatchEvent(new CustomEvent('request_filt', {
+                    bubbles: true,
+                    detail: this.filters,
                 }));
+
             }
         });
+    }
 
-
-
-
-
+    filtrate(products: product[]): product[] {
+        for (let filter in this.filters) {
+            products = products.filter((product) =>
+                this.filters[filter].includes(`${product[filter]}`))
+        }
+        return products;
     }
 
     generateGroup() {
