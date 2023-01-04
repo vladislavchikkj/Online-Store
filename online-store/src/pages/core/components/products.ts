@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import Item, { productList } from "./item";
 import Loader from "./loader";
 import { product } from "./item";
+=======
+
+import { product } from "./item";
+
+>>>>>>> ef0bb520af68e6168ec0cfc097d605b591a2bf18
 class Products {
 
     protected container: HTMLElement;
@@ -10,13 +16,17 @@ class Products {
 
     constructor(id: string) {
         this.container = document.createElement('div')
+<<<<<<< HEAD
         this.container.id = id; 
         this.loader = new Loader();
         this.item = new Item();
         this.loader.requestItems<productList>().then(((products) => console.log(products.products)));
+=======
+        this.container.id = id;
+>>>>>>> ef0bb520af68e6168ec0cfc097d605b591a2bf18
     }
 
-    
+
 
 
     renderProductElem() {
@@ -36,7 +46,7 @@ class Products {
         <div class="products__items">
         </div>
         `
-        
+
     }
 
     fillPostsList = (items: product[]) => {
