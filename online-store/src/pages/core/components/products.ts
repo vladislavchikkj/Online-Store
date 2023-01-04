@@ -63,7 +63,6 @@ class Products {
     render() {
 
         this.item.itemList()
-        this.fillPostsList()
         this.renderProductElem()
         return this.container;
     }
