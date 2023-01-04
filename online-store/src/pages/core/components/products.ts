@@ -8,19 +8,20 @@ class Products {
     private loader: Loader;
 
 
+
     constructor(id: string) {
         this.container = document.createElement('div')
         this.container.id = id; 
         this.loader = new Loader();
         this.item = new Item();
-        this.loader.requestItems<productList>().then(((products) => console.log(products.products)));
     }
 
     
 
 
-    renderProductElem() {
-
+    async renderProductElem() {
+        const productsArray: productList = await this.loader.requestItems<productList>()
+        const items = this.fillPostsList(productsArray.products)
         const productContainer = this.container;
         productContainer.className = 'products'
         productContainer.innerHTML = `
@@ -34,16 +35,19 @@ class Products {
             </div>
         </div>
         <div class="products__items">
+            ${items}
         </div>
         `
         
     }
 
-    fillPostsList = (items: product[]) => {
-        this.container.innerHTML = "";
-       if (items.length) {
-          items.forEach((item) => this.container.innerHTML += this.createItem(item));
-       }
+    public fillPostsList = (items: product[]) => {
+
+        let itemsStr = '';
+        if (items.length) {
+            items.forEach((item) => itemsStr += this.createItem(item));
+        }
+        return itemsStr;
       }
   
       createItem = (item: product) => `
@@ -61,9 +65,8 @@ class Products {
     `
 
     render() {
-
-        this.item.itemList()
-        this.renderProductElem()
+        this.renderProductElem();
+        // this.item.getItemList();
         return this.container;
     }
 }

@@ -1,5 +1,5 @@
 class Loader {
-    private  _addres: string = 'https://dummyjson.com/products/' ;
+    private _addres: string = 'https://dummyjson.com/products/' ;
 
     constructor() {
 
@@ -13,7 +13,7 @@ class Loader {
         if(!response.ok) throw Error('err');
 
         const result: T = await response.json();
-
+        console.log('result from loader', result);
         return result;
     }
 }

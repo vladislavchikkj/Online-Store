@@ -16,7 +16,7 @@ class Item  {
     }
     
   
-    public async itemList(): Promise<product[]> {
+    public async getItemList(): Promise<product[]> {
       let options: RequestInit = this.getRequestOptions('GET');
 
       let response = await fetch(`${this._domain}`, options)
