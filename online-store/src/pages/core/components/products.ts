@@ -1,4 +1,6 @@
 
+import { product } from "./item";
+
 class Products {
 
     protected container: HTMLElement;
@@ -6,10 +8,10 @@ class Products {
 
     constructor(id: string) {
         this.container = document.createElement('div')
-        this.container.id = id; 
+        this.container.id = id;
     }
 
-    
+
 
 
     renderProductElem() {
@@ -39,7 +41,7 @@ class Products {
             </div>
         </div>
         `
-        
+
     }
 
     render() {
