@@ -15,7 +15,6 @@ export const enum PageIds {
 class WrapComp {
     protected static container: HTMLElement;
     private initialPage: MainPage;
-    private item: Item;
 
     private static defaultPageId: string = 'currentPage';
     private hash: string = 'main-page';
@@ -62,17 +61,15 @@ class WrapComp {
         WrapComp.container = document.createElement('main')
         WrapComp.container.className = 'wrapperCurrentPage';
         this.initialPage = new MainPage('main-page');
-        this.item = new Item();
-        // const widgetUsers = new Product('products');
+        
     }
 
 
 
     renderWrapApp() {
-        this.item.itemList()
+        
         this.getPrivateHash();
         this.enableRouteChange();
-        console.log('Этот' , this.hash);
         WrapComp.renderNewPage(this.hash);
         return WrapComp.container;
     }

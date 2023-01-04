@@ -103,3 +103,41 @@
         }       
     }
 }
+
+
+.item__list{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+
+.item-card{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 10px;
+
+    width: 250px;
+    height: 350px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.wrapper__title{
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.wrapper__img{
+    overflow: hidden;
+    width: 250px;
+}
+
+.item__img{
+    display: flex;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+}

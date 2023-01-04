@@ -1,6 +1,7 @@
 import  Page from '../core/templates/page';
 import Products from '../core/components/products';
 
+
 class CatalogPage extends Page {
 
     private products: Products;
