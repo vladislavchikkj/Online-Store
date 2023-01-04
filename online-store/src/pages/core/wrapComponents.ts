@@ -5,7 +5,6 @@ import WrapComp from './wrapCurrentPage';
 
 class WrapApp {
     protected static container: HTMLElement;
-    static TextObgect = {};
     private header: Header;
     private footer: Footer;
     private wrapComp: WrapComp;

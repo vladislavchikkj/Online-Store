@@ -9,6 +9,8 @@ class Products {
         this.container.id = id; 
     }
 
+    
+
 
     renderProductElem() {
 

@@ -3,7 +3,8 @@ import MainPage from "../main-page";
 import BasketPage from "../basket-page";
 import CatalogPage from '../catalog-page';
 import ErrorPage from '../error-page';
-import Product from './components/prod';
+import Item from './components/item';
+// import Product from './components/item';
 
 export const enum PageIds {
     MainPage = 'main-page',
@@ -14,6 +15,7 @@ export const enum PageIds {
 class WrapComp {
     protected static container: HTMLElement;
     private initialPage: MainPage;
+    private item: Item;
 
     private static defaultPageId: string = 'currentPage';
     private hash: string = 'main-page';
@@ -60,16 +62,14 @@ class WrapComp {
         WrapComp.container = document.createElement('main')
         WrapComp.container.className = 'wrapperCurrentPage';
         this.initialPage = new MainPage('main-page');
-        const widgetUsers = new Product('products');
-        widgetUsers.fetchData();
-        setTimeout(() => {
-            console.log(widgetUsers.getData());
-        }, 1000);
+        this.item = new Item();
+        // const widgetUsers = new Product('products');
     }
 
 
 
     renderWrapApp() {
+        this.item.itemList()
         this.getPrivateHash();
         this.enableRouteChange();
         console.log('Этот' , this.hash);
