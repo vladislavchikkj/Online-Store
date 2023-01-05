@@ -1,0 +1,57 @@
+.filter{
+    width: 30%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 15px;
+
+    padding: 10px 0;
+
+    &__block{
+        width: 100%;
+
+        padding: 10px;
+        border-radius: 7px;
+        background-color: gray;
+    }
+
+    &__title{
+        text-align: center;
+
+        margin-bottom: 5px;
+    }
+
+    &__group{
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+
+    &__item{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__range{
+        position: relative;
+        left: 0;
+        top: 0;
+    }
+
+    &__down{
+
+        background: none;
+
+        pointer-events: none;
+    }
+    &__up{
+        position: absolute;
+        left: 0;
+
+        pointer-events: none;
+    }
+    &__from-to{
+        display: flex;
+        justify-content: space-between;
+    }
+}

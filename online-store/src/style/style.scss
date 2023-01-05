@@ -6,6 +6,7 @@ body{
     display: flex;
     flex-direction: column;
     width: 80%; // Del
+    padding: 20px 60px;
     // height: 1000px; // Del
     margin: 40px auto 40px auto;
     background-color: #fff;
@@ -20,3 +21,4 @@ body{
 @import "./components/main-page.scss";
 @import "./components/products.scss";
 @import "./components/footer.scss";
+@import "./components/filter.scss";
