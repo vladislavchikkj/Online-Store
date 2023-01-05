@@ -1,10 +1,11 @@
 export class Loader {
-    private _addres: string = 'https://dummyjson.com/products/category/smartphones';
+    private _addres: string = 'https://dummyjson.com/products';
     //private options: RequestInit = null;
 
     constructor() {
 
     }
+
     get addres() { return this._addres };
 
     async requestItems<T>() {

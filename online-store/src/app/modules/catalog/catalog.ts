@@ -1,15 +1,16 @@
 import { IMain, product, productList } from "../../interfaces/interfaces";
 import { Loader } from "./loader";
 import { Filter } from "./filter";
-import Products from "./products";
+import { Products } from "./products";
 
 export class Catalog implements IMain {
     private container: HTMLElement;
 
     private loader: Loader;
     private filter: Filter;
-    private products: Products;
-    private dispay: string = '';
+    private dispay: Products;
+
+    private products: product[] = [];
 
     constructor(place: HTMLElement) {
         place.innerHTML = this.generate();
@@ -18,21 +19,20 @@ export class Catalog implements IMain {
 
         this.loader = new Loader();
         this.filter = new Filter(this.container);
-        this.products = new Products('products');
+        this.dispay = new Products(this.container, 'products');
 
+        this.loader.requestItems<productList>().then((productsRespond) => {
+            this.products = productsRespond.products;
 
+            this.dispay.input = this.products;
+        });
 
         this.container.addEventListener('request_filt', (info: CustomEventInit) => {
-            const filters = info.detail;
-
-            this.loader.requestItems<productList>().then(((products) => {
-                console.log(this.filter.filtrate(products.products));
-            }));
+            this.dispay.input = this.filter.filtrate(this.products);
         });
-        console.log(this.products.render()); // Это надо вставить в Каталог
     }
-    
+
     generate() {
-        return `<div class="catalog-page"></div>`; // вот сюда 
+        return `<div class="catalog-page"></div>`;
     }
-}``
+} ``

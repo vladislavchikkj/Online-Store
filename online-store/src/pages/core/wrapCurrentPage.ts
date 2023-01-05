@@ -18,27 +18,27 @@ class WrapComp {
 
     private static defaultPageId: string = 'currentPage';
     private hash: string = 'main-page';
-    
+
     static renderNewPage(idPage: string) {
         const currentPageHTML = document.querySelector(`#${WrapComp.defaultPageId}`);
-        if(currentPageHTML){
+        if (currentPageHTML) {
             currentPageHTML.remove();
         }
         let page: Page | null = null;
-        
-        if(idPage === PageIds.MainPage){
+
+        if (idPage === PageIds.MainPage) {
             page = new MainPage(idPage);
         } else if (idPage === PageIds.BasketPage) {
             page = new BasketPage(idPage);
         }
         else if (idPage === PageIds.CatalogPage) {
-             page = new CatalogPage(idPage)
-        } 
+            page = new CatalogPage(idPage)
+        }
         else {
             page = new ErrorPage(idPage, '404')
         }
 
-        if(page){
+        if (page) {
             const pageHTML = page.render();
             pageHTML.id = WrapComp.defaultPageId;
             WrapComp.container.append(pageHTML)
@@ -50,7 +50,7 @@ class WrapComp {
         window.addEventListener('hashchange', () => {
             this.getPrivateHash();
             WrapComp.renderNewPage(this.hash);
-            
+
         })
     }
     private getPrivateHash() {
@@ -61,13 +61,13 @@ class WrapComp {
         WrapComp.container = document.createElement('main')
         WrapComp.container.className = 'wrapperCurrentPage';
         this.initialPage = new MainPage('main-page');
-        
+
     }
 
 
 
     renderWrapApp() {
-        
+
         this.getPrivateHash();
         this.enableRouteChange();
         WrapComp.renderNewPage(this.hash);

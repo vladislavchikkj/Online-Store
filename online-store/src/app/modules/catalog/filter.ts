@@ -60,7 +60,7 @@ export class Filter {
     private filters: IFilterCollection = {};
 
     constructor(place: HTMLElement) {
-        place.innerHTML += this.generate();
+        place.insertAdjacentHTML('beforeend', this.generate());
 
         this.container = place.querySelector('.filter') as HTMLElement;
 

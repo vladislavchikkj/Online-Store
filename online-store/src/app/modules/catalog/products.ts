@@ -3,71 +3,55 @@ import { product } from "../../interfaces/interfaces"
 import { productList } from "../../interfaces/interfaces"
 
 
-class Products {
-
+export class Products {
     protected container: HTMLElement;
-    private loader: Loader;
 
+    private products: product[] = [];
 
+    constructor(place: HTMLElement, id: string) {
+        place.insertAdjacentHTML('beforeend', this.generate());
 
-    constructor(id: string) {
-        this.container = document.createElement('div')
-        this.container.id = id; 
-        this.loader = new Loader();
+        this.container = place.querySelector('.products__items') as HTMLElement;
+        console.log(this.container)
     }
 
-    
-
-
-    async renderProductElem() {
-        const productsArray: productList = await this.loader.requestItems<productList>()
-        const items = this.fillPostsList(productsArray.products)
-        const productContainer = this.container;
-        productContainer.className = 'products'
-        productContainer.innerHTML = `
-        <div class="products__sort">
-            <div class="sort-bar">Sort options</div>
-            <div class="stat">Found: 100</div>
-            <div class="total-bar">Cart total</div>
-            <div class="view-mode">
-                <div class="big-v active-mode"></div>
-                <div class="small-v"></div>
+    generate = () => `
+        <div class="products">
+            <div class="products__sort">
+                <div class="sort-bar">Sort options</div>
+                <div class="stat">Found: 100</div>
+                <div class="total-bar">Cart total</div>
+                <div class="view-mode">
+                    <div class="big-v active-mode"></div>
+                    <div class="small-v"></div>
+                </div>
+            </div>
+            <div class="products__items">
             </div>
         </div>
-        <div class="products__items">
-            ${items}
-        </div>
         `
-        
+
+    set input(items: product[]) {
+        this.products = items;
+
+        this.output();
     }
 
-    public fillPostsList = (items: product[]) => {
+    public output() {
+        this.container.innerHTML = this.products.reduce((result, item) => result += this.createItem(item), '');
+    }
 
-        let itemsStr = '';
-        if (items.length) {
-            items.forEach((item) => itemsStr += this.createItem(item));
-        }
-        return itemsStr;
-      }
-  
-      createItem = (item: product) => `
-      <div class="item-card">
-        <div class="item__wrapper">
-            <div class="wrapper__title">${item.title}</div>
-            <div class="item__img" style="background-image: url(${item.images[0]})"></div>
+    createItem = (item: product) => `
+        <div class="item-card" data-id = "${item.id}">
+            <div class="item__wrapper">
+                <div class="wrapper__title">${item.title}</div>
+                <div class="item__img" style="background-image: url(${item.images[0]})"></div>
+            </div>
+
+            <div class="item__buttons">
+                <button class="buttons__add" onclick="editItem()">Add</button>
+                <button class="buttons__detail" onclick="detailItem())">Detail</button>
+            </div>
         </div>
-  
-        <div class="item__buttons">
-            <button class="buttons__add" onclick="editItem()">Add</button>
-            <button class="buttons__detail" onclick="detailItem())">Detail</button>
-        </div>
-      </div>
     `
-
-    render() {
-        this.renderProductElem();
-        return this.container;
-    }
 }
-
-export default Products;
