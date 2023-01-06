@@ -27,6 +27,7 @@ export class Products {
         document.addEventListener('click', (e) => {
             this.closeSortOptionMenu(e);
         });
+        
     }
 
     generate = () => `
@@ -66,6 +67,14 @@ export class Products {
         <div class="item-card" data-id = "${item.id}">
             <div class="item__wrapper">
                 <div class="wrapper__title">${item.title}</div>
+                <div class="wrapper__item-info">
+                    <div class="wrapper__price">Price: ${item.price}</div>
+                    <div class="wrapper__price">Discount: ${item.discountPercentage}</div>
+                    <div class="wrapper__price">Rarting: ${item.rating}</div>
+                    <div class="wrapper__price">Stock: ${item.stock}</div>
+                    <div class="wrapper__price">Brand: ${item.brand}</div>
+                    <div class="wrapper__price">Category: ${item.category}</div>
+                </div>
                 <div class="item__img" style="background-image: url(${item.images[0]})"></div>
             </div>
 
@@ -77,6 +86,7 @@ export class Products {
     `
     createSortOptionMenu() {
         this.myDropdown.classList.toggle("show");
+
     }
 
     closeSortOptionMenu(event: any) {    // any type change!
