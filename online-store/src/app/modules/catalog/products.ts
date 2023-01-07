@@ -1,34 +1,53 @@
-import { Loader } from "./loader"
-import { product } from "../../interfaces/interfaces"
-import { productList } from "../../interfaces/interfaces"
+import { product } from "../../interfaces/interfaces";
+
+interface ISort {
+    (a: product, b: product): number
+}
 
 
 export class Products {
     protected container: HTMLElement;
     protected panel: HTMLElement;
-    protected myDropdown: HTMLElement;
+    protected dropMenu: HTMLElement;
     protected back: HTMLElement;
 
     private products: product[] = [];
+    private sortOption: ISort | undefined;
+
 
     constructor(place: HTMLElement, id: string) {
         place.insertAdjacentHTML('beforeend', this.generate());
 
         this.container = place.querySelector('.products__items') as HTMLElement;
         this.panel = place.querySelector('.dropdown') as HTMLElement;
-        this.myDropdown = place.querySelector('.dropdown-content') as HTMLElement;
+        this.dropMenu = place.querySelector('.dropdown-content') as HTMLElement;
         this.back = place.querySelector('.products') as HTMLElement;
 
         this.panel.addEventListener('click', () => {
-            console.log('click');
-            this.createSortOptionMenu()
+            this.toggleSortOptionMenu()
+        });
+
+        this.dropMenu.addEventListener('click', (e) => {
+            const selected = (e.target as HTMLElement).closest('.sort-option');
+
+            const sortOptionSt = (selected as HTMLElement).dataset.sort as string;
+
+            this.sortOption = this.sortSelect(sortOptionSt);
+
+            this.output();
         });
 
         document.addEventListener('click', (e) => {
             this.closeSortOptionMenu(e);
         });
-        
     }
+
+    private sortSelect(option: string): ISort {
+        if (option === 'rating')
+            return (a, b) => b.rating - a.rating;
+        return (a, b) => a.price - b.price;
+    }
+
 
     generate = () => `
         <div class="products">
@@ -36,8 +55,8 @@ export class Products {
                 <div class="dropdown">
                     <button class="dropbtn">Sort options</button>
                     <div id="myDropdown" class="dropdown-content">
-                        <a href="#">Sort by price</a>
-                        <a href="#">Sort by rating</a>
+                        <a href="#" data-sort="price" class = "sort-option">Sort by price</a>
+                        <a href="#" data-sort="rating" class = "sort-option">Sort by rating</a>
                     </div>
                 </div>
                 <div class="stat">Found: 100</div>
@@ -59,8 +78,9 @@ export class Products {
     }
 
     public output(): void {
-        this.container.innerHTML = this.products.sort()
-            .reduce((acc, item) => acc + this.createItem(item), '');
+        const output = this.products.sort(this.sortOption); // filter there
+
+        this.container.innerHTML = output.reduce((acc, item) => acc + this.createItem(item), '');
     }
 
     createItem = (item: product) => `
@@ -80,25 +100,25 @@ export class Products {
 
             <div class="item__buttons">
                 <button class="buttons__add" onclick="editItem()">Add</button>
-                <button class="buttons__detail" onclick="detailItem())">Detail</button>
+                <button class="buttons__detail" onclick="detailItem()">Detail</button>
             </div>
         </div>
     `
-    createSortOptionMenu() {
-        this.myDropdown.classList.toggle("show");
-
+    toggleSortOptionMenu() {
+        this.dropMenu.classList.toggle("show");
     }
 
-    closeSortOptionMenu(event: any) {    // any type change!
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
+    closeSortOptionMenu(event: Event) {
+        const target = (event.target as HTMLElement).closest('.dropbtn');
+
+        if (!target) {
+            /* У тебя ещё планируются выпадающие штуки?
+            const dropdowns = this.panel.querySelectorAll("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                dropdowns[i].classList.remove('show');
             }
+            */
+            this.dropMenu.classList.remove('show');
         }
     }
 }
