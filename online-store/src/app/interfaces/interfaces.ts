@@ -39,5 +39,5 @@ export interface IMain {
 }
 
 export interface IFilterCollection {
-    [index: string]: string[];
+    [index: string]: Set<string> | number[]
 }

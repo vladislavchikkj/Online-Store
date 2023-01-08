@@ -19,10 +19,15 @@ export class Catalog implements IMain {
 
         this.loader = new Loader();
         this.filter = new Filter(this.container);
+
+
+
         this.dispay = new Products(this.container, 'products');
 
         this.loader.requestItems<productList>().then((productsRespond) => {
             this.products = productsRespond.products;
+
+            this.filter.filterConfig = this.products
 
             this.dispay.input = this.products;
         });
