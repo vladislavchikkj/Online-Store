@@ -14,10 +14,11 @@ export class Products {
     private products: product[] = [];
     private sortOption: ISort | undefined;
     private seachResult: HTMLInputElement | undefined;
-    // private searchItems: Isearch | undefined;
+    private foundItems: number;
 
 
     constructor(place: HTMLElement, id: string) {
+        this.foundItems = 30;
         place.insertAdjacentHTML('beforeend', this.generate());
 
         this.container = place.querySelector('.products__items') as HTMLElement;
@@ -68,7 +69,7 @@ export class Products {
                         <a href="#" data-sort="rating" class = "sort-option">Sort by rating</a>
                     </div>
                 </div>
-                <div class="stat">Found: 100</div>
+                <div class="stat">Found: 30</div>
                 <form class="header__search-form search-form">
                     <input class="search-form__input" placeholder="Выберите товар">
                 </form>
@@ -92,9 +93,9 @@ export class Products {
            item.title.toLocaleLowerCase().includes(this.searchForm.value.toLocaleLowerCase())
         ).sort(this.sortOption); // filter there
         this.container.innerHTML = output.reduce((acc, item) => acc + this.createItem(item), '');
-
-
-        
+        this.foundItems = output.length
+        console.log(output.length);
+            
         
         
     }
