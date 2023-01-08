@@ -15,6 +15,7 @@ class App {
 
     private header: Header;
     private main: IMain;
+
     //private footer = new Footer();
 
 

@@ -32,7 +32,6 @@ export class Products {
 
         this.dropMenu.addEventListener('click', (e) => {
             const selected = (e.target as HTMLElement).closest('.sort-option');
-
             const sortOptionSt = (selected as HTMLElement).dataset.sort as string;
             
             this.sortOption = this.sortSelect(sortOptionSt);
@@ -85,7 +84,6 @@ export class Products {
 
     set input(items: product[]) {
         this.products = items;
-        console.log(this.products);
         this.output();
     }
 
