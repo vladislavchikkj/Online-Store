@@ -104,7 +104,7 @@ export class Filter {
     filtrate(products: product[]): product[] {
         for (let filter in this.filters) {
             products = products.filter((product) =>
-                this.filters[filter].includes(`${product[filter]}`))
+            this.filters[filter].includes(`${product[filter]}`))
         }
         return products;
     }

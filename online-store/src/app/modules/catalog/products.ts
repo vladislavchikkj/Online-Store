@@ -4,15 +4,17 @@ interface ISort {
     (a: product, b: product): number
 }
 
-
 export class Products {
     protected container: HTMLElement;
     protected panel: HTMLElement;
     protected dropMenu: HTMLElement;
     protected back: HTMLElement;
+    protected searchForm: HTMLInputElement;
 
     private products: product[] = [];
     private sortOption: ISort | undefined;
+    private seachResult: HTMLInputElement | undefined;
+    // private searchItems: Isearch | undefined;
 
 
     constructor(place: HTMLElement, id: string) {
@@ -22,6 +24,7 @@ export class Products {
         this.panel = place.querySelector('.dropdown') as HTMLElement;
         this.dropMenu = place.querySelector('.dropdown-content') as HTMLElement;
         this.back = place.querySelector('.products') as HTMLElement;
+        this.searchForm = place.querySelector('.search-form__input') as HTMLInputElement;
 
         this.panel.addEventListener('click', () => {
             this.toggleSortOptionMenu()
@@ -31,15 +34,16 @@ export class Products {
             const selected = (e.target as HTMLElement).closest('.sort-option');
 
             const sortOptionSt = (selected as HTMLElement).dataset.sort as string;
-
+            
             this.sortOption = this.sortSelect(sortOptionSt);
-
             this.output();
         });
 
         document.addEventListener('click', (e) => {
             this.closeSortOptionMenu(e);
         });
+    
+        this.addHandler(this.searchForm);
     }
 
     private sortSelect(option: string): ISort {
@@ -47,6 +51,12 @@ export class Products {
             return (a, b) => b.rating - a.rating;
         return (a, b) => a.price - b.price;
     }
+
+    private addHandler(input: HTMLElement) {
+        input.addEventListener("input", (e: Event) => {
+            this.output();
+        });
+      }
 
 
     generate = () => `
@@ -60,7 +70,9 @@ export class Products {
                     </div>
                 </div>
                 <div class="stat">Found: 100</div>
-                <div class="total-bar">Cart total</div>
+                <form class="header__search-form search-form">
+                    <input class="search-form__input" placeholder="Выберите товар">
+                </form>
                 <div class="view-mode">
                     <div class="big-v active-mode"></div>
                     <div class="small-v"></div>
@@ -73,14 +85,20 @@ export class Products {
 
     set input(items: product[]) {
         this.products = items;
-
+        console.log(this.products);
         this.output();
     }
 
     public output(): void {
-        const output = this.products.sort(this.sortOption); // filter there
-
+        const output = this.products.filter(item => 
+           item.title.toLocaleLowerCase().includes(this.searchForm.value.toLocaleLowerCase())
+        ).sort(this.sortOption); // filter there
         this.container.innerHTML = output.reduce((acc, item) => acc + this.createItem(item), '');
+
+
+        
+        
+        
     }
 
     createItem = (item: product) => `

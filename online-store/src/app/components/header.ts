@@ -9,9 +9,7 @@ export class Header {
             <header class="header page__header">
 
                 <a class="header__page-title" href="#main-page">Online store</a>
-                <form class="header__search-form search-form">
-                    <input class="search-form__input" placeholder="Выберите товар">
-                </form>
+                <div class="total-bar">Cart total: 100</div>
                 <a class="card card_active" href="#basket-page"></a>
                 <a class="btn-catalog" href="#catalog-page">Catalog</a>
 
