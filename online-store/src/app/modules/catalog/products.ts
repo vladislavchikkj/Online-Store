@@ -16,10 +16,13 @@ export class Products {
     private seachResult: HTMLInputElement | undefined;
     private foundItemsPlace: HTMLElement;
     private foundItems: number;
+    private items: HTMLElement;
+    private dataId: string | null;
 
 
     constructor(place: HTMLElement, id: string) {
         this.foundItems = 30;
+        this.dataId = ''
         place.insertAdjacentHTML('beforeend', this.generate());
 
         this.container = place.querySelector('.products__items') as HTMLElement;
@@ -28,6 +31,16 @@ export class Products {
         this.back = place.querySelector('.products') as HTMLElement;
         this.searchForm = place.querySelector('.search-form__input') as HTMLInputElement;
         this.foundItemsPlace = place.querySelector('.found') as HTMLElement;
+        this.items = place.querySelector('.products__items') as HTMLElement;
+
+        this.items.addEventListener('click', (e) => {
+            let item = (e.target as HTMLElement).closest('.item-card');
+            if(item !== null) {
+                this.dataId = item.getAttribute('data-id')
+                console.log(this.dataId);
+                window.location.hash = this.dataId ? `item-page/${this.dataId}`: '1'
+            };
+        });
 
         this.panel.addEventListener('click', () => {
             this.toggleSortOptionMenu()
@@ -47,6 +60,11 @@ export class Products {
     
         this.addHandler(this.searchForm);
     }
+
+    protected generateItemById() { // this 
+        console.log(this.dataId);
+    }
+
 
     private sortSelect(option: string): ISort {
         if (option === 'rating')
@@ -68,10 +86,10 @@ export class Products {
         <div class="products">
             <div class="products__sort">
                 <div class="dropdown">
-                    <button class="dropbtn">Sort options</button>
+                    <button class="dropbtn">Sort options ↴</button>
                     <div id="myDropdown" class="dropdown-content">
-                        <a href="#" data-sort="price" class = "sort-option">Sort by price</a>
-                        <a href="#" data-sort="rating" class = "sort-option">Sort by rating</a>
+                        <a data-sort="price" class = "sort-option">Sort by price</a>
+                        <a data-sort="rating" class = "sort-option">Sort by rating</a>
                     </div>
                 </div>
                 <div class="found">Found: 30</div>
@@ -100,14 +118,13 @@ export class Products {
         this.container.innerHTML = output.reduce((acc, item) => acc + this.createItem(item), '');
         this.foundItems = output.length
         this.showFoundItem(output.length)
-        console.log(output.length);
             
         
         
     }
-
+    // href="#item-page"
     createItem = (item: product) => `
-        <div class="item-card" data-id = "${item.id}">
+        <a class="item-card" data-id = "${item.id}">
             <div class="item__wrapper">
                 <div class="wrapper__title">${item.title}</div>
                 <div class="wrapper__item-info">
@@ -125,7 +142,7 @@ export class Products {
                 <button class="buttons__add" onclick="editItem()">Add</button>
                 <button class="buttons__detail" onclick="detailItem()">Detail</button>
             </div>
-        </div>
+        </a>
     `
     toggleSortOptionMenu() {
         this.dropMenu.classList.toggle("show");

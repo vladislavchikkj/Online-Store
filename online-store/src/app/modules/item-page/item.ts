@@ -1,0 +1,57 @@
+import { IMain, product, productList } from "../../interfaces/interfaces";
+import { Products } from "../catalog/products";
+import { Loader } from "../catalog/loader";
+
+export class ItemPage implements IMain {
+    private container: HTMLElement;
+    private dataId: number;
+    private loader: Loader;
+
+    constructor(place: HTMLElement, dataId: string) {
+
+        this.container = place.querySelector('.item-page') as HTMLElement;
+        
+        this.dataId = +dataId.split('/')[1];
+        
+        this.loader = new Loader();
+        
+        place.innerHTML = this.generate();
+    }
+
+    generate() {
+        const itemsJSON = window.localStorage.getItem('items') || `[]`
+        
+        const items: product[] = JSON.parse(itemsJSON)
+
+        const currItem = items.filter((el) => el.id === this.dataId)
+        console.log(currItem);
+        
+
+        // const currentItem = array[].this
+        return `
+        <div class="item-page">
+            <div class="item-page__path">brand --> smartphone --> apple</div>
+            <div class="item-page__wrapper">
+                <div class="item-image" style="background-image: url(https://i.dummyjson.com/data/products/1/thumbnail.jpg)" >
+
+                </div>
+                <div class="item-text-wrap">
+                    <div class="title">${currItem[0].title}</div>
+                    <div class="descr">Description: ${currItem[0].decription}</div>
+                    <div class="discount">Discount Percentage: ${currItem[0].discountPercentage}</div>
+                    <div class="rating">Rating: ${currItem[0].rating}</div>
+                    <div class="stock">Stock: ${currItem[0].stock}</div>
+                    <div class="brand">Brand: ${currItem[0].brand}</div>
+                    <div class="category">Category: ${currItem[0].category}</div>
+                    <div class="total">
+                        <div class="total-price">1000</div>
+                        <div class="total-btn">
+                            <button>Add to card</button>
+                            <button>Buy now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }
+} 

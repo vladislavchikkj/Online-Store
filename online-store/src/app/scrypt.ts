@@ -1,6 +1,5 @@
-import Footer from "../archive/pages/core/components/foter";
-import MainPage from "../archive/pages/main-page";
 import { Header } from "./components/header";
+import { Footer } from "./components/footer";
 import { IMain, } from "./interfaces/interfaces";
 import { Main } from "./components/main";
 
@@ -15,6 +14,7 @@ class App {
 
     private header: Header;
     private main: IMain;
+    // private footer: Footer;
 
     //private footer = new Footer();
 
@@ -29,6 +29,7 @@ class App {
         }
         this.header = new Header(this.container);
         this.main = new Main(this.container)
+        // this.footer = new Footer(this.container);
     }
 }
 
