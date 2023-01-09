@@ -17,7 +17,9 @@ export class Products {
     private foundItemsPlace: HTMLElement;
     private foundItems: number;
     private items: HTMLElement;
+    private currItems: HTMLElement;
     private dataId: string | null;
+    private sizeItemBtn: HTMLElement;
 
 
     constructor(place: HTMLElement, id: string) {
@@ -32,7 +34,19 @@ export class Products {
         this.searchForm = place.querySelector('.search-form__input') as HTMLInputElement;
         this.foundItemsPlace = place.querySelector('.found') as HTMLElement;
         this.items = place.querySelector('.products__items') as HTMLElement;
+        this.currItems = place.querySelector('.item-card') as HTMLElement;
+        this.sizeItemBtn = place.querySelector('.view-mode') as HTMLElement;
 
+        this.sizeItemBtn.addEventListener('click', (e) => {
+            let btn = (e.target as HTMLElement);
+            if(btn.className === 'big-v'){
+                this.items.classList.add('active')
+            }
+            if(btn.className === 'small-v'){
+                this.items.classList.remove('active')
+            }
+            
+        });
         this.items.addEventListener('click', (e) => {
             let item = (e.target as HTMLElement).closest('.item-card');
             if(item !== null) {
@@ -97,7 +111,7 @@ export class Products {
                     <input class="search-form__input" placeholder="Выберите товар">
                 </form>
                 <div class="view-mode">
-                    <div class="big-v active-mode"></div>
+                    <div class="big-v"></div>
                     <div class="small-v"></div>
                 </div>
             </div>
