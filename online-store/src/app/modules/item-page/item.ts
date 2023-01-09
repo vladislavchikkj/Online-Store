@@ -6,6 +6,8 @@ export class ItemPage implements IMain {
     private container: HTMLElement;
     private dataId: number;
     private loader: Loader;
+    protected imageCard: HTMLElement;
+    private currImageCard: HTMLElement;
 
     constructor(place: HTMLElement, dataId: string) {
 
@@ -16,6 +18,14 @@ export class ItemPage implements IMain {
         this.loader = new Loader();
         
         place.innerHTML = this.generate();
+        
+        this.imageCard = place.querySelector('.inactive-image-wrapper') as HTMLElement;
+        this.currImageCard = place.querySelector('.item-image-current') as HTMLElement;
+        
+        this.imageCard.addEventListener('click', (e) => {
+            let item = (e.target as HTMLElement);
+            this.currImageCard.style.backgroundImage = `${item.style.backgroundImage}`
+        });
     }
 
     generate() {
@@ -24,7 +34,7 @@ export class ItemPage implements IMain {
         const items: product[] = JSON.parse(itemsJSON)
 
         const currItem = items.filter((el) => el.id === this.dataId)
-        console.log(currItem);
+
         
 
         // const currentItem = array[].this
@@ -34,7 +44,7 @@ export class ItemPage implements IMain {
             <div class="item-page__wrapper">
             <div class="wrapper-blocks">
                 <div class="curr-image-wrapper">
-                    <div class="item-image current" style="background-image: url(${currItem[0].images[0]})"></div>
+                    <div class="item-image-current" style="background-image: url(${currItem[0].images[0]})"></div>
                 </div>
                 <div class="inactive-image-wrapper">
                     <div class="item-image" style="background-image: url(${currItem[0].images[1]})"></div>
