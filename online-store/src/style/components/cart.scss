@@ -1,12 +1,7 @@
 .basket-page{
     display: flex;
-    &__header{
-        width: 100%;
 
-        margin-bottom: 10px;
-        padding: 15px;
-        border-bottom: 1px solid black;
-    }
+    column-gap: 15px;
     &__cart{
         width: 70%;
         height: 100%;
@@ -19,6 +14,35 @@
 
     }
 }
+
+.cart{
+
+
+    &__header{
+        margin-bottom: 10px;
+
+        width: 100%;
+
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        
+        border-bottom: 1px solid black;
+    }
+
+    &__paginator{
+        width: 270px;
+
+        display: flex;
+        justify-content: space-between;
+    }
+    &__settings-pagination{
+        width: 40px;
+    }
+}
+
+
+
 
 .items {
     display: flex;
@@ -85,14 +109,14 @@
     }
 
     &__count-container{
+        width: 200px;
+
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
         row-gap: 20px;
-
-        width: 120px;
     }
 
     &__count-controller {
@@ -101,6 +125,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
     }
 
     &__count-button {
@@ -117,8 +142,6 @@
     }
 
     &__count-output {
-        flex: 1 1 auto;
-
         text-align: center;
     }
 }

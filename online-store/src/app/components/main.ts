@@ -4,7 +4,7 @@ import { StartPage } from "../modules/start-page";
 import { BasketPage } from "../modules/basket-page";
 import { ItemPage } from "../modules/item-page/item";
 import { Loader } from "../modules/catalog/loader";
-import { Cart } from "../modules/cart/cart";
+import { СashRegister } from "../modules/cart/cash-register"
 
 
 
@@ -48,7 +48,7 @@ export class Main {
         const hash = window.location.hash.slice(1);
         if (hash === 'start-page') this._page = new StartPage(this.container);
         if (hash === 'catalog-page') this._page = new Catalog(this.container);
-        if (hash === 'cart-page') this._page = new Cart(this.container);
+        if (hash === 'cart-page') this._page = new СashRegister(this.container);
         if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
     }
     checkInitialPage() {
