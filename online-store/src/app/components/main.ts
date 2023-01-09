@@ -25,7 +25,7 @@ export class Main {
     }
 
     set page(name: string) {
-        if (name === 'start-page') this._page = new StartPage(this.container);
+        if (name === 'start-page') this._page = new Catalog(this.container);
 
     }
     changePage() {

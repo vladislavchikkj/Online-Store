@@ -14,6 +14,7 @@ export class Products {
     private products: product[] = [];
     private sortOption: ISort | undefined;
     private seachResult: HTMLInputElement | undefined;
+    private foundItemsPlace: HTMLElement;
     private foundItems: number;
 
 
@@ -26,6 +27,7 @@ export class Products {
         this.dropMenu = place.querySelector('.dropdown-content') as HTMLElement;
         this.back = place.querySelector('.products') as HTMLElement;
         this.searchForm = place.querySelector('.search-form__input') as HTMLInputElement;
+        this.foundItemsPlace = place.querySelector('.found') as HTMLElement;
 
         this.panel.addEventListener('click', () => {
             this.toggleSortOptionMenu()
@@ -56,7 +58,10 @@ export class Products {
         input.addEventListener("input", (e: Event) => {
             this.output();
         });
-      }
+    }
+    protected showFoundItem(found: number) {
+        this.foundItemsPlace.innerText = `Found: ${found} `
+    }
 
 
     generate = () => `
@@ -69,7 +74,7 @@ export class Products {
                         <a href="#" data-sort="rating" class = "sort-option">Sort by rating</a>
                     </div>
                 </div>
-                <div class="stat">Found: 30</div>
+                <div class="found">Found: 30</div>
                 <form class="header__search-form search-form">
                     <input class="search-form__input" placeholder="Выберите товар">
                 </form>
@@ -94,6 +99,7 @@ export class Products {
         ).sort(this.sortOption); // filter there
         this.container.innerHTML = output.reduce((acc, item) => acc + this.createItem(item), '');
         this.foundItems = output.length
+        this.showFoundItem(output.length)
         console.log(output.length);
             
         
