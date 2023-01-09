@@ -49,7 +49,7 @@ export class Main {
         const hash = window.location.hash.slice(1);
         if (hash === 'start-page') this._page = new StartPage(this.container);
         if (hash === 'catalog-page') this._page = new Catalog(this.container);
-        if (hash === 'basket-page') this._page = new BasketPage(this.container);
+        if (hash === 'cart-page') this._page = new Cart(this.container);
         if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
     }
     checkInitialPage() {
