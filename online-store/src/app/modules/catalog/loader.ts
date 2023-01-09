@@ -17,4 +17,14 @@ export class Loader {
 
         return result;
     }
+
+    async requestItem<T>(productId: string) {
+        const responce = await fetch(`${this.addres}/${productId}`)
+
+        if (!responce.ok) throw Error("bad request");
+
+        const result: T = await responce.json();
+
+        return result;
+    }
 }

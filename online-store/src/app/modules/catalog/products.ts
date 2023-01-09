@@ -38,6 +38,7 @@ export class Products {
             if(item !== null) {
                 this.dataId = item.getAttribute('data-id')
                 console.log(this.dataId);
+                window.location.hash = this.dataId ? `item-page/${this.dataId}`: '1'
             };
         });
 
