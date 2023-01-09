@@ -1,11 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Store</title>
+    
 </head>
+
 <body>
+
+    <body>
+        <div class="container">
+            <header class="header page__header">
+
+                <a class="header__page-title" href="#main-page">Online store</a>
+                <form class="header__search-form search-form">
+                    <input class="search-form__input" placeholder="Выберите товар">
+                </form>
+                <a class="card card_active" href="#basket-page"></a>
+                <a class="btn-catalog" href="#catalog-page">Catalog</a>
+
+            </header>
+            <main class="wrapperCurrentPage">
+                <div class="catalog-page">
+                    <aside class="filter">
+                        <div class="filter__block">
+                            <h3 class="filter__title">Производители</h3>
+                            <div class="filter__group">
+                                <div class="filter__item">
+                                    <label>
+                                        <input type="checkbox" name="lenovo" id="proizvoditel">
+                                        lenovo
+                                    </label>
+                                    <p>(5/5)</p>
+                                </div>
+                                <div class="filter__item">
+                                    <label>
+                                        <input type="checkbox" name="lenovo" id="proizvoditel">
+                                        ne lenovo
+                                    </label>
+                                    <p>(5/5)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter__block">
+                            <h3 class="filter__title">Цена</h3>
+                            <div class="filter__range">
+                                <input type="range" name="price" id="price-start" class="filter__up">
+                                <input type="range" name="price" id="price-end" class="filter__down">
+                                <div class="filter__from-to">
+                                    <span class="price-start">0$</span>
+                                    <span class="price-end">1$</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </aside>
+                    <div id="products" class="products">
+                        <div class="products__sort">
+                            <div class="sort-bar">Sort options</div>
+                            <div class="stat">Found: 100</div>
+                            <div class="total-bar">Cart total</div>
+                            <div class="view-mode">
+                                <div class="big-v active-mode"></div>
+                                <div class="small-v"></div>
+                            </div>
+                        </div>
+                        <div class="products__items">
+                            <div class="item-card">
+                                <div class="item-text">
+                                    <div class="item-title">Name product</div>
+                                    <div class="item-info">Info Product</div>
+                                </div>
+                                <div class="item-buttons">
+                                    <div class="item-buttons__btn">Add To Cart</div>
+                                    <div class="item-buttons__btn">Details</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="Footer-cc">
+                <div class="footer__container">Online Store 2023</div>
+            </footer>
+        </div>
+
+
+    </body>
 </body>
+
 </html>
