@@ -40,7 +40,7 @@ export class ItemPage implements IMain {
         // const currentItem = array[].this
         return `
         <div class="item-page">
-            <div class="item-page__path">brand --> smartphone --> apple</div>
+            <div class="item-page__path">store  &nbsp &#8594 &nbsp ${currItem[0].category} &#8594 &nbsp${currItem[0].brand} &#8594 &nbsp${currItem[0].title}</div>
             <div class="item-page__wrapper">
             <div class="wrapper-blocks">
                 <div class="curr-image-wrapper">
