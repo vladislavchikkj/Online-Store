@@ -2,6 +2,7 @@ import { IMain, IPageList } from "../interfaces/interfaces";
 import { Catalog } from "../modules/catalog/catalog";
 import { StartPage } from "../modules/start-page";
 import { BasketPage } from "../modules/basket-page";
+import { ItemPage } from "../modules/item-page/item";
 
 
 
@@ -25,7 +26,7 @@ export class Main {
     }
 
     set page(name: string) {
-        if (name === 'start-page') this._page = new Catalog(this.container);
+        if (name === 'start-page') this._page = new StartPage(this.container);
 
     }
     changePage() {
@@ -34,6 +35,7 @@ export class Main {
             if (hash === 'start-page') this._page = new StartPage(this.container);
             if (hash === 'catalog-page') this._page = new Catalog(this.container);
             if (hash === 'basket-page') this._page = new BasketPage(this.container);
+            if (hash === 'item-page') this._page = new ItemPage(this.container);
         })
     }
 }

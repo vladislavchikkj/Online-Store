@@ -1,0 +1,71 @@
+.item-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__path{
+        font-size: 20px;
+        padding: 20px;
+    }
+    &__wrapper{
+        display: flex;
+        gap: 40px;
+    }
+}
+.item-image{
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.item-text-wrap{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.total{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    gap: 20px;
+}
+
+.total-price{
+    
+}
+.total-btn{
+    display: flex;
+    gap: 20px;
+    button{   
+        width: 100px;
+        height: 50px;
+        border-radius: 10px;
+    }
+}
+
+
+.slider__items {
+    counter-reset: slide;
+  }
+
+  .slider__item {
+    counter-increment: slide;
+  }
+
+  .slider__item>div::before {
+    content: counter(slide);
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #fff;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: bold;
+  }
