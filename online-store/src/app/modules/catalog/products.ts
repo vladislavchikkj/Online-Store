@@ -49,10 +49,10 @@ export class Products {
         });
         this.items.addEventListener('click', (e) => {
             let item = (e.target as HTMLElement).closest('.item-card');
-            if(item !== null) {
+            if (item !== null) {
                 this.dataId = item.getAttribute('data-id')
                 console.log(this.dataId);
-                window.location.hash = this.dataId ? `item-page/${this.dataId}`: '1'
+                window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1'
             };
         });
 
@@ -63,7 +63,7 @@ export class Products {
         this.dropMenu.addEventListener('click', (e) => {
             const selected = (e.target as HTMLElement).closest('.sort-option');
             const sortOptionSt = (selected as HTMLElement).dataset.sort as string;
-            
+
             this.sortOption = this.sortSelect(sortOptionSt);
             this.output();
         });
@@ -71,7 +71,7 @@ export class Products {
         document.addEventListener('click', (e) => {
             this.closeSortOptionMenu(e);
         });
-    
+
         this.addHandler(this.searchForm);
     }
 
@@ -126,15 +126,15 @@ export class Products {
     }
 
     public output(): void {
-        const output = this.products.filter(item => 
-           item.title.toLocaleLowerCase().includes(this.searchForm.value.toLocaleLowerCase())
+        const output = this.products.filter(item =>
+            item.title.toLocaleLowerCase().includes(this.searchForm.value.toLocaleLowerCase())
         ).sort(this.sortOption); // filter there
         this.container.innerHTML = output.reduce((acc, item) => acc + this.createItem(item), '');
         this.foundItems = output.length
         this.showFoundItem(output.length)
-            
-        
-        
+
+
+
     }
     // href="#item-page"
     createItem = (item: product) => `

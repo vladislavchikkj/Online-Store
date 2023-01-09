@@ -6,110 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Store</title>
-    
+
 </head>
 
 <body>
-
-    <body>
-        <div class="container">
-            <header class="header page__header">
-
-                <a class="header__page-title" href="#main-page">Online store</a>
-                <form class="header__search-form search-form">
-                    <input class="search-form__input" placeholder="Выберите товар">
-                </form>
-                <a class="card card_active" href="#basket-page"></a>
-                <a class="btn-catalog" href="#catalog-page">Catalog</a>
-
-            </header>
-            <main class="wrapperCurrentPage">
-                <div class="catalog-page">
-                    <aside class="filter">
-                        <div class="filter__block">
-                            <h3 class="filter__title">Производители</h3>
-                            <div class="filter__group">
-                                <div class="filter__item">
-                                    <label>
-                                        <input type="checkbox" name="lenovo" id="proizvoditel">
-                                        lenovo
-                                    </label>
-                                    <p>(5/5)</p>
-                                </div>
-                                <div class="filter__item">
-                                    <label>
-                                        <input type="checkbox" name="lenovo" id="proizvoditel">
-                                        ne lenovo
-                                    </label>
-                                    <p>(5/5)</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filter__block">
-                            <h3 class="filter__title">Цена</h3>
-                            <div class="filter__range">
-                                <input type="range" name="price" id="price-start" class="filter__up">
-                                <input type="range" name="price" id="price-end" class="filter__down">
-                                <div class="filter__from-to">
-                                    <span class="price-start">0$</span>
-                                    <span class="price-end">1$</span>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </aside>
-                    <div id="products" class="products">
-                        <div class="products__sort">
-                            <div class="sort-bar">Sort options</div>
-                            <div class="stat">Found: 100</div>
-                            <div class="total-bar">Cart total</div>
-                            <div class="view-mode">
-                                <div class="big-v active-mode"></div>
-                                <div class="small-v"></div>
-                            </div>
-                        </div>
-                        <div class="products__items">
-                            <div class="item-card">
-                                <div class="item-text">
-                                    <div class="item-title">Name product</div>
-                                    <div class="item-info">Info Product</div>
-                                </div>
-                                <div class="item-buttons">
-                                    <div class="item-buttons__btn">Add To Cart</div>
-                                    <div class="item-buttons__btn">Details</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <footer class="Footer-cc">
-                <div class="footer__container">Online Store 2023</div>
-            </footer>
+    <aside class="items__item item">
+        <div class="item__index-place">
+            <span class="item__index">1</span>
         </div>
-        <div class="item-page">
-            <div class="item-page__title"></div>
-            <div class="item-page__wrapper">
-                <div class="item-slider"></div>
-                <div class="item-text-wrap">
-                    <div class="descr"></div>
-                    <div class="discount"></div>
-                    <div class="rating"></div>
-                    <div class="stock"></div>
-                    <div class="brand"></div>
-                    <div class="category"></div>
-                </div>
-                <div class="total">
-                    <div class="total-price"></div>
-                    <div class="total-btn">
-                        <button>add to card</button>
-                        <button>buy now</button>
-                    </div>
-                </div>
+        <img src="https://i.dummyjson.com/data/products/1/2.jpg" alt="#" class="item__image">
+        <div class="item__informations">
+            <h4 class="item__name">${11}</h4>
+            <p class="item__decription">${11}</p>
+        </div>
+        <div class="item__count-container">
+            <p class="item__count">12</p>
+            <div class="item__count-controller">
+                <button class="item__count-button button+">+</button>
+                <span class="item__count-output">1</span>
+                <button class="item__count-button button">-</button>
             </div>
+            <p class="item__price">12</p>
         </div>
-    </body>
+    </aside>
 </body>
 
 </html>
