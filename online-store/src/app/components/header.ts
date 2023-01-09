@@ -10,10 +10,10 @@ export class Header {
 
                 <a class="header__page-title" href="#start-page">Online store</a>
                 <div class="total-bar">Cart total: 100</div>
-                <a class="card card_active" href="#basket-page"></a>
+                <a class="card card_active" href="#cart-page"></a>
                 <a class="btn-catalog" href="#catalog-page">Catalog</a>
 
             </header>
         `;
     }
-}
+}``
