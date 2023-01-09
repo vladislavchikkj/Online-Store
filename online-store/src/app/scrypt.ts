@@ -14,9 +14,7 @@ class App {
 
     private header: Header;
     private main: IMain;
-    // private footer: Footer;
-
-    //private footer = new Footer();
+    private footer: Footer;
 
 
     private container: HTMLElement;
@@ -29,7 +27,7 @@ class App {
         }
         this.header = new Header(this.container);
         this.main = new Main(this.container)
-        // this.footer = new Footer(this.container);
+        this.footer = new Footer(this.container);
     }
 }
 

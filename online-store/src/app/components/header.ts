@@ -1,7 +1,7 @@
 export class Header {
 
     constructor(place: HTMLElement, lang: string = "ru") {
-        place.innerHTML += this.render();
+        place.insertAdjacentHTML('beforeend', this.render());
     }
 
     render() {
@@ -16,4 +16,4 @@ export class Header {
             </header>
         `;
     }
-}``
+} ``
