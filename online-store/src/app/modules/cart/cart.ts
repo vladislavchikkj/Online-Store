@@ -30,12 +30,14 @@ export class Cart implements IMain {
 
         if (storagedProd) this._products = JSON.parse(storagedProd) as Array<item>;
 
-        place.innerHTML = this.generate();
+        place.innerHTML = this.render();
 
-        this.container = place;
+        this.container = place.querySelector(".items") as HTMLElement;
+
+        this.insertItems();
     }
 
-    generate(): string {
+    render(): string {
         return `
             <div class="basket-page">
                 <section class="basket-page__cart">
@@ -43,11 +45,38 @@ export class Cart implements IMain {
                         <h2 class="basket-page__title">Товары в корзине</h2>
                         
                     </header>
+                    <div class="basket-page__items items">
+                    </div>
                 </section>
                 <section class="basket-page__sale">
 
                 </section>
             </div>`;
     }
-
+    insertItems() {
+        this.container.innerHTML = this._products.reduce((acc, item, index) => acc + this.createItem(item, index), "");
+    }
+    createItem(item: item, index = 0) {
+        return `
+            <aside class="items__item item" data-id = ${item.product.id} data-index=${index}>
+                <div class="item__index-place">
+                    <span class="item__index">${index}</span>
+                </div>
+                <img src="${item.product.images[0]}" alt="${item.product.title}" class="item__image">
+                <div class="item__informations">
+                    <h4 class="item__title">${item.product.title}</h4>
+                    <p class="item__decription">${item.product.decription}</p>
+                </div>
+                <div class="item__count-container">
+                    <p class="item__count">${item.product.stock}</p>
+                    <div class="item__count-controller">
+                        <button class="item__count-button button+">+</button>
+                        <span class="item__count-output">1</span>
+                        <button class="item__count-button button">-</button>
+                    </div>
+                    <p class="item__price">${item.product.price}</p>
+                </div>
+            </aside>
+            `
+    }
 }

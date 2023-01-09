@@ -23,12 +23,11 @@ export class Main {
             window.localStorage.setItem('items', JSON.stringify(productsRespond.products))
         });
 
-        place.innerHTML += this.generate();
+        place.insertAdjacentHTML('beforeend', this.generate());
 
         this.container = document.querySelector('.wrapperCurrentPage') as HTMLElement;
 
         this.hash = window.location.hash
-        console.log(this.hash);
         this.changePage()
         this.page = this.hash;
     }
