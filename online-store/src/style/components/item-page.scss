@@ -11,28 +11,70 @@
         gap: 40px;
     }
 }
+.wrapper-blocks{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.inactive-image-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;  
+}
+
 .item-image{
-    width: 500px;
-    height: 500px;
-    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    // border: 1px solid rgba(0, 0, 0, 0.308);
+    box-shadow: 0px 6px 14px 0px rgb(0 0 0 / 50%);
     border-radius: 10px;
     background-repeat: no-repeat;
     background-size: cover;
+    cursor: pointer;
+    transition: all .5s;
+    &:hover{
+        box-shadow: 0px 6px 14px 0px rgb(170, 51, 111);
+    }
 }
+
+.item-image-current{
+    width: 450px;
+    height: 450px;
+    // border: 1px solid rgba(0, 0, 0, 0.308);
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    transition: all .5s;
+    &:hover{
+        box-shadow: 0px 6px 14px 0px rgba(170, 51, 111, 0.76);
+    }
+}
+
 .item-text-wrap{
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    border: 1px solid black;
     border-radius: 10px;
+    box-shadow: 0px 6px 14px 0px rgb(0 0 0 / 50%);
+    .title{
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .descr{
+        width: 450px;
+    }
+    
 }
 .total{
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid black;
+    // border: 1px solid black;
+    box-shadow: 0px 6px 14px 0px rgb(0 0 0 / 50%);
     border-radius: 10px;
     gap: 20px;
 }
@@ -43,29 +85,14 @@
 .total-btn{
     display: flex;
     gap: 20px;
-    button{   
+    button{
+        color: rgb(255, 255, 255);
+        background-color: rgb(170, 51, 111);   
         width: 100px;
         height: 50px;
-        border-radius: 10px;
+        border: none;
+        cursor: pointer;
     }
 }
 
 
-.slider__items {
-    counter-reset: slide;
-  }
-
-  .slider__item {
-    counter-increment: slide;
-  }
-
-  .slider__item>div::before {
-    content: counter(slide);
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    color: #fff;
-    font-style: italic;
-    font-size: 32px;
-    font-weight: bold;
-  }
