@@ -4,9 +4,13 @@
 
 body{
     background-color: rgb(170, 51, 111);
+    min-height: 100vh;
 }
-
+.wrapperCurrentPage{
+    flex: 1 1 auto;
+}
 .container{
+    height: 100%;
     display: flex;
     flex-direction: column;
     width: 80%; // Del
