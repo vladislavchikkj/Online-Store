@@ -20,8 +20,6 @@ export class Catalog implements IMain {
         this.loader = new Loader();
         this.filter = new Filter(this.container);
 
-
-
         this.dispay = new Products(this.container, 'products');
 
         this.loader.requestItems<productList>().then((productsRespond) => {
@@ -35,6 +33,8 @@ export class Catalog implements IMain {
         this.container.addEventListener('request_filt', (info: CustomEventInit) => {
             this.dispay.input = this.filter.filtrate(this.products);
         });
+
+
     }
 
     generate() {

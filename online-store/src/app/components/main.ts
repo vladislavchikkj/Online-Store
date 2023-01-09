@@ -1,7 +1,9 @@
-import { IMain, IPageList } from "../interfaces/interfaces";
+import { IMain, IPageList, productList} from "../interfaces/interfaces";
 import { Catalog } from "../modules/catalog/catalog";
 import { StartPage } from "../modules/start-page";
 import { BasketPage } from "../modules/basket-page";
+import { ItemPage } from "../modules/item-page/item";
+import { Loader } from "../modules/catalog/loader";
 
 
 
@@ -9,14 +11,23 @@ export class Main {
     private container: HTMLElement;
     private _page: IMain | null = null;
     private hash: string;
+    private loader: Loader;
 
 
     constructor(place: HTMLElement) {
+
+        this.loader = new Loader();
+
+        this.loader.requestItems<productList>().then((productsRespond) => {
+        window.localStorage.setItem('items', JSON.stringify(productsRespond.products))  
+        });
+
         place.innerHTML += this.generate();
 
         this.container = document.querySelector('.wrapperCurrentPage') as HTMLElement;
 
-        this.hash = 'start-page'
+        this.hash = window.location.hash
+        console.log( this.hash);
         this.changePage()
         this.page = this.hash;
     }
@@ -25,16 +36,23 @@ export class Main {
     }
 
     set page(name: string) {
-        if (name === 'start-page') this._page = new Catalog(this.container);
-
+        this.renderPageByHash();
     }
     changePage() {
         window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.slice(1);
-            if (hash === 'start-page') this._page = new StartPage(this.container);
-            if (hash === 'catalog-page') this._page = new Catalog(this.container);
-            if (hash === 'basket-page') this._page = new BasketPage(this.container);
+            this.renderPageByHash();
         })
+    }
+    renderPageByHash(){
+        const reg = new RegExp(/item-page\/\d/g)
+        const hash = window.location.hash.slice(1);
+        if (hash === 'start-page') this._page = new StartPage(this.container);
+        if (hash === 'catalog-page') this._page = new Catalog(this.container);
+        if (hash === 'basket-page') this._page = new BasketPage(this.container);
+        if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
+    }
+    checkInitialPage(){
+
     }
 }
 
