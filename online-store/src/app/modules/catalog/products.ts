@@ -44,6 +44,7 @@ export class Products {
             }
             if(btn.className === 'small-v'){
                 this.items.classList.remove('active')
+                console.log();
             }
             
         });
