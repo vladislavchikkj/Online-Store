@@ -32,25 +32,35 @@ export class ItemPage implements IMain {
         <div class="item-page">
             <div class="item-page__path">brand --> smartphone --> apple</div>
             <div class="item-page__wrapper">
-                <div class="item-image" style="background-image: url(https://i.dummyjson.com/data/products/1/thumbnail.jpg)" >
+            <div class="wrapper-blocks">
+                <div class="curr-image-wrapper">
+                    <div class="item-image current" style="background-image: url(${currItem[0].images[0]})"></div>
+                </div>
+                <div class="inactive-image-wrapper">
+                    <div class="item-image" style="background-image: url(${currItem[0].images[1]})"></div>
+                    <div class="item-image" style="background-image: url(${currItem[0].images[2]})"></div>
+                    <div class="item-image" style="background-image: url(${currItem[0].images[3]})"></div>
+                </div>
+                
 
                 </div>
                 <div class="item-text-wrap">
                     <div class="title">${currItem[0].title}</div>
-                    <div class="descr">Description: ${currItem[0].decription}</div>
+                    <div class="descr">Description: ${currItem[0].description}</div>
                     <div class="discount">Discount Percentage: ${currItem[0].discountPercentage}</div>
                     <div class="rating">Rating: ${currItem[0].rating}</div>
                     <div class="stock">Stock: ${currItem[0].stock}</div>
                     <div class="brand">Brand: ${currItem[0].brand}</div>
                     <div class="category">Category: ${currItem[0].category}</div>
                     <div class="total">
-                        <div class="total-price">1000</div>
+                        <div class="total-price">Price: $1000</div>
                         <div class="total-btn">
                             <button>Add to card</button>
                             <button>Buy now</button>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>`;
     }
