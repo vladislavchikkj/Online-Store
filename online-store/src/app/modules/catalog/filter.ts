@@ -99,7 +99,8 @@ export class Filter {
                     bubbles: true,
                     detail: this.filters,
                 })
-            );
+                );
+                console.log(this.filters);
         });
     }
 
