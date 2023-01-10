@@ -27,7 +27,7 @@ export class Main {
 
         this.container = document.querySelector('.wrapperCurrentPage') as HTMLElement;
 
-        this.hash = window.location.hash
+        this.hash = window.location.hash 
         this.changePage()
         this.page = this.hash;
     }
@@ -46,7 +46,7 @@ export class Main {
     renderPageByHash() {
         const reg = new RegExp(/item-page\/\d/g)
         const hash = window.location.hash.slice(1);
-        if (hash === 'start-page') this._page = new StartPage(this.container);
+        if (hash === 'start-page' || hash === '') this._page = new StartPage(this.container);
         if (hash === 'catalog-page') this._page = new Catalog(this.container);
         if (hash === 'cart-page') this._page = new СashRegister(this.container);
         if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
