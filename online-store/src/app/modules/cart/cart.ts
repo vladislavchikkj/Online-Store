@@ -10,138 +10,9 @@ export class Cart implements IMain {
     private count = 4;
     private page = 1;
 
-    private _productsSource: item[] = [
-        {
-            product: {
-                brand: "Apple",
-                category: "smartphones",
-                decription: "An apple mobile which is nothing like apple",
-                discountPercentage: 12.96,
-                id: 1,
-                images: ['https://i.dummyjson.com/data/products/1/1.jpg', 'https://i.dummyjson.com/data/products/1/2.jpg', 'https://i.dummyjson.com/data/products/1/3.jpg', 'https://i.dummyjson.com/data/products/1/4.jpg', 'https://i.dummyjson.com/data/products/1/thumbnail.jpg'],
-                price: 549,
-                rating: 4.69,
-                stock: 94,
-                thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                title: "iPhone 9",
-            },
-            count: 1,
-        },
-        {
-            product: {
-                brand: "Apple",
-                category: "smartphones",
-                decription: "An apple mobile which is nothing like apple",
-                discountPercentage: 12.96,
-                id: 3,
-                images: ['https://i.dummyjson.com/data/products/1/1.jpg', 'https://i.dummyjson.com/data/products/1/2.jpg', 'https://i.dummyjson.com/data/products/1/3.jpg', 'https://i.dummyjson.com/data/products/1/4.jpg', 'https://i.dummyjson.com/data/products/1/thumbnail.jpg'],
-                price: 549,
-                rating: 4.69,
-                stock: 94,
-                thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                title: "iPhone 9",
-            },
-            count: 1,
-        },
-        {
-            product: {
-                brand: "Apple",
-                category: "smartphones",
-                decription: "An apple mobile which is nothing like apple",
-                discountPercentage: 12.96,
-                id: 5,
-                images: ['https://i.dummyjson.com/data/products/1/1.jpg', 'https://i.dummyjson.com/data/products/1/2.jpg', 'https://i.dummyjson.com/data/products/1/3.jpg', 'https://i.dummyjson.com/data/products/1/4.jpg', 'https://i.dummyjson.com/data/products/1/thumbnail.jpg'],
-                price: 549,
-                rating: 4.69,
-                stock: 94,
-                thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                title: "iPhone 9",
-            },
-            count: 1,
-        },
-        {
-            product: {
-                brand: "Apple",
-                category: "smartphones",
-                decription: "An apple mobile which is nothing like apple",
-                discountPercentage: 12.96,
-                id: 7,
-                images: ['https://i.dummyjson.com/data/products/1/1.jpg', 'https://i.dummyjson.com/data/products/1/2.jpg', 'https://i.dummyjson.com/data/products/1/3.jpg', 'https://i.dummyjson.com/data/products/1/4.jpg', 'https://i.dummyjson.com/data/products/1/thumbnail.jpg'],
-                price: 549,
-                rating: 4.69,
-                stock: 94,
-                thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                title: "iPhone 9",
-            },
-            count: 1,
-        },
-        {
-            product: {
-                brand: "Apple",
-                category: "smartphones",
-                decription: "An apple mobile which is nothing like apple",
-                discountPercentage: 12.96,
-                id: 9,
-                images: ['https://i.dummyjson.com/data/products/1/1.jpg', 'https://i.dummyjson.com/data/products/1/2.jpg', 'https://i.dummyjson.com/data/products/1/3.jpg', 'https://i.dummyjson.com/data/products/1/4.jpg', 'https://i.dummyjson.com/data/products/1/thumbnail.jpg'],
-                price: 549,
-                rating: 4.69,
-                stock: 94,
-                thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                title: "iPhone 9",
-            },
-            count: 1,
-        },
-        {
-            product: {
-                brand: "Apple",
-                category: "smartphones",
-                decription: "An apple mobile which is nothing like apple",
-                discountPercentage: 12.96,
-                id: 11,
-                images: ['https://i.dummyjson.com/data/products/1/1.jpg', 'https://i.dummyjson.com/data/products/1/2.jpg', 'https://i.dummyjson.com/data/products/1/3.jpg', 'https://i.dummyjson.com/data/products/1/4.jpg', 'https://i.dummyjson.com/data/products/1/thumbnail.jpg'],
-                price: 549,
-                rating: 4.69,
-                stock: 94,
-                thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                title: "iPhone 9",
-            },
-            count: 1,
-        },
-        {
-            product: {
-                brand: "Apple",
-                category: "smartphones",
-                decription: "An apple mobile which is nothing like apple",
-                discountPercentage: 12.96,
-                id: 13,
-                images: ['https://i.dummyjson.com/data/products/1/1.jpg', 'https://i.dummyjson.com/data/products/1/2.jpg', 'https://i.dummyjson.com/data/products/1/3.jpg', 'https://i.dummyjson.com/data/products/1/4.jpg', 'https://i.dummyjson.com/data/products/1/thumbnail.jpg'],
-                price: 549,
-                rating: 4.69,
-                stock: 94,
-                thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                title: "iPhone 9",
-            },
-            count: 1,
-        },
-        {
-            product: {
-                brand: "Apple",
-                category: "smartphones",
-                decription: "An apple mobile which is nothing like apple",
-                discountPercentage: 12.96,
-                id: 15,
-                images: ['https://i.dummyjson.com/data/products/1/1.jpg', 'https://i.dummyjson.com/data/products/1/2.jpg', 'https://i.dummyjson.com/data/products/1/3.jpg', 'https://i.dummyjson.com/data/products/1/4.jpg', 'https://i.dummyjson.com/data/products/1/thumbnail.jpg'],
-                price: 549,
-                rating: 4.69,
-                stock: 94,
-                thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                title: "iPhone 9",
-            },
-            count: 1,
-        },
-    ];
+    private productsSource: item[] = [];
 
-    private _products: item[] = [];
+    private products: item[] = [];
 
     private countController: HTMLInputElement;
     private pageController: HTMLInputElement;
@@ -151,9 +22,9 @@ export class Cart implements IMain {
     constructor(place: HTMLElement) {
         const storagedProd = localStorage.getItem('carded') as string;
 
-        if (storagedProd) this._productsSource = JSON.parse(storagedProd) as Array<item>;
+        if (storagedProd) this.productsSource = JSON.parse(storagedProd) as Array<item>;
 
-        this._products = this._productsSource;
+        this.products = this.productsSource;
 
         place.innerHTML = this.render();
 
@@ -168,7 +39,7 @@ export class Cart implements IMain {
 
 
         this.countController.addEventListener('input', () => {
-            this.pageController.max = `${Math.ceil(this._productsSource.length / this.count)}`;
+            this.pageController.max = `${Math.ceil(this.productsSource.length / this.count)}`;
             this.setOutputItems();
         });
 
@@ -178,34 +49,39 @@ export class Cart implements IMain {
 
     }
 
+    set input(list: item[]) {
+        this.productsSource = list || this.productsSource;
+
+        this.setOutputItems();
+    }
+
+    get output(): item[] {
+        return this.productsSource;
+    }
+
     setOutputItems() {
         this.count = +this.countController.value;
         this.page = +this.pageController.value - 1;
 
+        this.products = this.productsSource.slice(this.count * this.page, this.count * (this.page + 1));
 
-        this._products = this._productsSource.slice(this.count * this.page, this.count * (this.page + 1));
-
-        this.insertItems();
+        this.container.innerHTML = this.products.reduce((acc, item, index) => acc + this.createItem(item, index + this.page * this.count), "");
     }
-
 
     render(): string {
         return `
             <section class="basket-page__cart cart">
-                    <header class="cart__header">
-                        <h2 class="cart__title">Товары в корзине</h2>
-                        <div class = "cart__paginator">
-                            <label>Max: <input type = "number" class="cart__settings-pagination" min = 2 max = 7 value = 4 id="max-count"></label>
-                            <label>Page: <input type = "number" class="cart__settings-pagination" min = 1 max = ${this._products.length / this.count} value = 1 id="page"></label>
-                        </div>
-                    </header>
-                    <div class="cart__items items">
+                <header class="cart__header">
+                    <h2 class="cart__title">Товары в корзине</h2>
+                    <div class = "cart__paginator">
+                        <label>Max: <input type = "number" class="cart__settings-pagination" min = 2 max = 7 value = 4 id="max-count"></label>
+                        <label>Page: <input type = "number" class="cart__settings-pagination" min = 1 max = ${this.products.length / this.count} value = 1 id="page"></label>
                     </div>
-                </section>`;
+                </header>
+                <div class="cart__items items"></div>
+            </section>`;
     }
-    insertItems() {
-        this.container.innerHTML = this._products.reduce((acc, item, index) => acc + this.createItem(item, index + this.page * this.count), "");
-    }
+
     createItem(item: item, index = 0) {
         return `
             <aside class="items__item item" data-id = ${item.product.id} data-index=${index + 1}>
@@ -244,18 +120,20 @@ export class Cart implements IMain {
                 let product: item;
 
 
-                const prodID = this._productsSource[index].product.id;
+                const prodID = this.productsSource[index].product.id;
 
-                if (id === prodID) product = this._productsSource[index];
-                else product = this._productsSource.find((item) => item.product.id === id) as item;
+                if (id === prodID) product = this.productsSource[index];
+                else product = this.productsSource.find((item) => item.product.id === id) as item;
 
                 product.count = (button.value === '+') ? product.count + 1 : product.count - 1;
 
-                this._productsSource = this._productsSource.filter((item) => (item.count > 0));
+                this.productsSource = this.productsSource.filter((item) => (item.count > 0));
 
-                this.pageController.max = `${Math.ceil(this._productsSource.length / this.count)}`;
+                this.pageController.max = `${Math.ceil(this.productsSource.length / this.count)}`;
 
                 this.setOutputItems();
+
+                this.container.dispatchEvent(new Event('update', { bubbles: true }));
             }
         })
     }
