@@ -16,8 +16,6 @@
 }
 
 .cart{
-
-
     &__header{
         margin-bottom: 10px;
 
@@ -93,7 +91,7 @@
     }
 
     &__informations {
-        flex: 1 1 auto;
+        width: 620px;
     }
 
     &__title {
@@ -109,7 +107,7 @@
     }
 
     &__count-container{
-        width: 200px;
+        min-width: 130px;
 
         display: flex;
         flex-direction: column;

@@ -192,16 +192,15 @@ export class Cart implements IMain {
     render(): string {
         return `
             <section class="basket-page__cart cart">
-                    <header class="cart__header">
-                        <h2 class="cart__title">Товары в корзине</h2>
-                        <div class = "cart__paginator">
-                            <label>Max: <input type = "number" class="cart__settings-pagination" min = 2 max = 7 value = 4 id="max-count"></label>
-                            <label>Page: <input type = "number" class="cart__settings-pagination" min = 1 max = ${this._products.length / this.count} value = 1 id="page"></label>
-                        </div>
-                    </header>
-                    <div class="cart__items items">
+                <header class="cart__header">
+                    <h2 class="cart__title">Товары в корзине</h2>
+                    <div class = "cart__paginator">
+                        <label>Max: <input type = "number" class="cart__settings-pagination" min = 2 max = 7 value = 4 id="max-count"></label>
+                        <label>Page: <input type = "number" class="cart__settings-pagination" min = 1 max = ${this._products.length / this.count} value = 1 id="page"></label>
                     </div>
-                </section>`;
+                </header>
+                <div class="cart__items items"></div>
+            </section>`;
     }
     insertItems() {
         this.container.innerHTML = this._products.reduce((acc, item, index) => acc + this.createItem(item, index + this.page * this.count), "");

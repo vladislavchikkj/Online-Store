@@ -24,12 +24,7 @@ export class СashRegister implements IMain {
 
     render(): string {
         return `
-            <div class="basket-page">
-                
-            
-                
-                </section>
-            </div>`;
+            <div class="basket-page"></div>`;
         //<section class="basket-page__sale sale">
     }
 
