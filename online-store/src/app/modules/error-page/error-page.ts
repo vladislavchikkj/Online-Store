@@ -4,13 +4,13 @@ export class ErrorPage implements IMain {
     private container: HTMLElement;
 
     constructor(place: HTMLElement) {
-        place.innerHTML = this.generate();
+        place.innerHTML = this.render();
 
         this.container = place.querySelector('.error-page') as HTMLElement;
 
     }
 
-    generate() {
+    render() {
         return `
         <div class="errror-page">
             404

@@ -11,28 +11,28 @@ export class ItemPage implements IMain {
     constructor(place: HTMLElement, dataId: string) {
 
         this.container = place.querySelector('.item-page') as HTMLElement;
-        
+
         this.dataId = +dataId.split('/')[1];
-        
-        place.innerHTML = this.generate();
-        
+
+        place.innerHTML = this.render();
+
         this.imageCard = place.querySelector('.inactive-image-wrapper') as HTMLElement;
         this.currImageCard = place.querySelector('.item-image-current') as HTMLElement;
-        
+
         this.imageCard.addEventListener('click', (e) => {
             let item = (e.target as HTMLElement);
             this.currImageCard.style.backgroundImage = `${item.style.backgroundImage}`
         });
     }
 
-    generate() {
+    render() {
         const itemsJSON = window.localStorage.getItem('items') || `[]`
-        
+
         const items: product[] = JSON.parse(itemsJSON)
 
         const currItem = items.filter((el) => el.id === this.dataId)
 
-        
+
 
         // const currentItem = array[].this
         return `

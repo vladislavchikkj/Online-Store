@@ -13,7 +13,7 @@ export class Catalog implements IMain {
     private products: product[] = [];
 
     constructor(place: HTMLElement) {
-        place.innerHTML = this.generate();
+        place.innerHTML = this.render();
 
         this.container = place.querySelector('.catalog-page') as HTMLElement;
 
@@ -37,10 +37,10 @@ export class Catalog implements IMain {
 
     }
     save() {
-        
+
     }
 
-    generate() {
+    render() {
         return `<div class="catalog-page"></div>`;
     }
 } ``
