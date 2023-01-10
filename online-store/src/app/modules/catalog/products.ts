@@ -20,11 +20,19 @@ export class Products {
     private currItems: HTMLElement;
     private dataId: string | null;
     private sizeItemBtn: HTMLElement;
+    private itemBox : string[];
+    private totalBox : number;
+    private sumItemBox : number;
+    private cardSumItem: HTMLElement;
+    private totalBar: HTMLElement;
 
 
     constructor(place: HTMLElement, id: string) {
         this.foundItems = 30;
         this.dataId = ''
+        this.itemBox = []
+        this.totalBox = 0
+        this.sumItemBox = 0
         place.insertAdjacentHTML('beforeend', this.generate());
 
         this.container = place.querySelector('.products__items') as HTMLElement;
@@ -36,7 +44,10 @@ export class Products {
         this.items = place.querySelector('.products__items') as HTMLElement;
         this.currItems = place.querySelector('.item-card') as HTMLElement;
         this.sizeItemBtn = place.querySelector('.view-mode') as HTMLElement;
+        this.cardSumItem = document.querySelector('.number-elemenst') as HTMLElement;
+        this.totalBar = document.querySelector('.total-num') as HTMLElement;
 
+        
         this.sizeItemBtn.addEventListener('click', (e) => {
             let btn = (e.target as HTMLElement);
             if(btn.className === 'big-v'){
@@ -49,12 +60,49 @@ export class Products {
             
         });
         this.items.addEventListener('click', (e) => {
-            let item = (e.target as HTMLElement).closest('.item-card');
+            let item = (e.target as HTMLElement).closest('.item__wrapper');
+            
             if (item !== null) {
-                this.dataId = item.getAttribute('data-id')
-                console.log(this.dataId);
-                window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1'
+                this.dataId = item.getAttribute('data-id') as string
+                window.location.hash = this.dataId ? `item-page/${this.dataId}` : 'error-page'
             };
+
+            let btn = (e.target as HTMLElement).closest('.buttons__i');
+
+            if(btn?.getAttribute('data-id')){
+                this.dataId = btn.getAttribute('data-id') as string
+                
+                if(!this.itemBox.includes(this.dataId)){
+                    this.itemBox.push(this.dataId);
+                    this.sumItemBox += 1
+                    this.cardSumItem.innerHTML = `${this.sumItemBox}`
+                    btn.innerHTML = 'Drop'
+                    btn.classList.add('drop')
+                    this.totalBox += this.products[+this.dataId].price
+                    this.totalBar.innerHTML = `${this.totalBox}`
+                    return
+                }
+                if(btn.classList.contains('drop') && this.itemBox.includes(this.dataId)){
+                    var index = this.itemBox.indexOf(this.dataId);
+                        if (index >= 0) {
+                            this.itemBox.splice( index, 1 );
+                        }
+                    this.sumItemBox -= 1
+                    this.cardSumItem.innerHTML = `${this.sumItemBox}`
+                    btn.innerHTML = 'Add'
+                    btn.classList.remove('drop')
+                    this.totalBox -= this.products[+this.dataId].price
+                    this.totalBar.innerHTML = `${this.totalBox}`
+                    return
+                }
+                console.log(this.itemBox);
+            }
+            if(btn?.getAttribute('detailData-id')){
+                this.dataId = btn.getAttribute('detailData-id') as string
+                window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1'
+            }
+            
+            
         });
 
         this.panel.addEventListener('click', () => {
@@ -137,10 +185,10 @@ export class Products {
 
 
     }
-    // href="#item-page"
+
     createItem = (item: product) => `
-        <a class="item-card" data-id = "${item.id}">
-            <div class="item__wrapper">
+        <a class="item-card">
+            <div class="item__wrapper" data-id = "${item.id}">
                 <div class="wrapper__title">${item.title}</div>
                 <div class="wrapper__item-info">
                     <div class="wrapper__price">Price: ${item.price}</div>
@@ -154,8 +202,8 @@ export class Products {
             </div>
 
             <div class="item__buttons">
-                <button class="buttons__add" onclick="editItem()">Add</button>
-                <button class="buttons__detail" onclick="detailItem()">Detail</button>
+                <button data-id = "${item.id}" class="buttons__i">Add</button>
+                <button detailData-id = "${item.id}" class="buttons__i">Detail</button>
             </div>
         </a>
     `

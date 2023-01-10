@@ -1,10 +1,10 @@
 import { IMain, IPageList, productList } from "../interfaces/interfaces";
 import { Catalog } from "../modules/catalog/catalog";
 import { StartPage } from "../modules/start-page";
-import { BasketPage } from "../modules/basket-page";
 import { ItemPage } from "../modules/item-page/item";
 import { Loader } from "../modules/catalog/loader";
 import { СashRegister } from "../modules/cart/cash-register"
+import { ErrorPage } from "../modules/error-page/error-page";
 
 
 
@@ -16,6 +16,7 @@ export class Main {
 
 
     constructor(place: HTMLElement) {
+        
 
         this.loader = new Loader();
 
@@ -49,6 +50,7 @@ export class Main {
         if (hash === 'start-page' || hash === '') this._page = new StartPage(this.container);
         if (hash === 'catalog-page') this._page = new Catalog(this.container);
         if (hash === 'cart-page') this._page = new СashRegister(this.container);
+        if (hash === 'error-page') this._page = new ErrorPage(this.container);
         if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
     }
     checkInitialPage() {

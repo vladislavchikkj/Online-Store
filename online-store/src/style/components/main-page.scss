@@ -5,6 +5,8 @@
     //width: 80%;
     height: 100%;
     padding: 20px;
+    opacity: 0;
+    animation: ani 1s forwards;
 
     &__box {
         width: 100%;
@@ -84,5 +86,10 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+@keyframes ani {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
 
 @import './cart.scss';
