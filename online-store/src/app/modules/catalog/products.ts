@@ -80,6 +80,7 @@ export class Products {
                     btn.classList.add('drop')
                     this.totalBox += this.products[+this.dataId].price
                     this.totalBar.innerHTML = `${this.totalBox}`
+                    console.log(this.itemBox);
                     return
                 }
                 if(btn.classList.contains('drop') && this.itemBox.includes(this.dataId)){
