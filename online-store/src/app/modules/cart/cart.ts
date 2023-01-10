@@ -182,10 +182,9 @@ export class Cart implements IMain {
         this.count = +this.countController.value;
         this.page = +this.pageController.value - 1;
 
-
         this._products = this._productsSource.slice(this.count * this.page, this.count * (this.page + 1));
 
-        this.insertItems();
+        this.container.innerHTML = this._products.reduce((acc, item, index) => acc + this.createItem(item, index + this.page * this.count), "");
     }
 
 
@@ -202,9 +201,7 @@ export class Cart implements IMain {
                 <div class="cart__items items"></div>
             </section>`;
     }
-    insertItems() {
-        this.container.innerHTML = this._products.reduce((acc, item, index) => acc + this.createItem(item, index + this.page * this.count), "");
-    }
+
     createItem(item: item, index = 0) {
         return `
             <aside class="items__item item" data-id = ${item.product.id} data-index=${index + 1}>
