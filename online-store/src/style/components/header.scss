@@ -62,19 +62,18 @@ $main-page-width: 1000px;
     height: 32px;
 
     background: url("./assets/icons/i-cart-black-stroke.svg") center/contain no-repeat;
-    &_active::before{
-        content: "0";
-        
+    .number-elemenst{
         position: absolute;
         left: 0;
         bottom: 0;
-        transform: translate(-35%, 35%);
+        transform: translate(-40%, 35%);
 
-        width: 1em;
-        height: 1em;
+        width: 1.2em;
+        height: 1.2em;
         padding: 1px;
 
         border-radius: 50%;
+        color: rgb(0, 0, 0);
         background-color: red;
 
         font-size: 0.75rem;
