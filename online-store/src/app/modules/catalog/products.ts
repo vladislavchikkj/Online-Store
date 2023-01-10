@@ -20,19 +20,19 @@ export class Products {
     private currItems: HTMLElement;
     private dataId: string | null;
     private sizeItemBtn: HTMLElement;
-    private itemBox : string[];
-    private totalBox : number;
-    private sumItemBox : number;
+    private itemBox: string[];
+    private totalBox: number;
+    private sumItemBox: number;
     private cardSumItem: HTMLElement;
     private totalBar: HTMLElement;
 
 
     constructor(place: HTMLElement, id: string) {
         this.foundItems = 30;
-        this.dataId = ''
-        this.itemBox = []
-        this.totalBox = 0
-        this.sumItemBox = 0
+        this.dataId = '';
+        this.itemBox = [];
+        this.totalBox = 0;
+        this.sumItemBox = 0;
         place.insertAdjacentHTML('beforeend', this.generate());
 
         this.container = place.querySelector('.products__items') as HTMLElement;
@@ -47,21 +47,20 @@ export class Products {
         this.cardSumItem = document.querySelector('.number-elemenst') as HTMLElement;
         this.totalBar = document.querySelector('.total-num') as HTMLElement;
 
-        
+
         this.sizeItemBtn.addEventListener('click', (e) => {
             let btn = (e.target as HTMLElement);
-            if(btn.className === 'big-v'){
-                this.items.classList.add('active')
+            if (btn.className === 'big-v') {
+                this.items.classList.add('active');
             }
-            if(btn.className === 'small-v'){
-                this.items.classList.remove('active')
-                console.log();
+            if (btn.className === 'small-v') {
+                this.items.classList.remove('active');
             }
-            
+
         });
         this.items.addEventListener('click', (e) => {
             let item = (e.target as HTMLElement).closest('.item__wrapper');
-            
+
             if (item !== null) {
                 this.dataId = item.getAttribute('data-id') as string
                 window.location.hash = this.dataId ? `item-page/${this.dataId}` : 'error-page'
@@ -69,10 +68,10 @@ export class Products {
 
             let btn = (e.target as HTMLElement).closest('.buttons__i');
 
-            if(btn?.getAttribute('data-id')){
+            if (btn?.getAttribute('data-id')) {
                 this.dataId = btn.getAttribute('data-id') as string
-                
-                if(!this.itemBox.includes(this.dataId)){
+
+                if (!this.itemBox.includes(this.dataId)) {
                     this.itemBox.push(this.dataId);
                     this.sumItemBox += 1
                     this.cardSumItem.innerHTML = `${this.sumItemBox}`
@@ -83,11 +82,11 @@ export class Products {
                     console.log(this.itemBox);
                     return
                 }
-                if(btn.classList.contains('drop') && this.itemBox.includes(this.dataId)){
+                if (btn.classList.contains('drop') && this.itemBox.includes(this.dataId)) {
                     var index = this.itemBox.indexOf(this.dataId);
-                        if (index >= 0) {
-                            this.itemBox.splice( index, 1 );
-                        }
+                    if (index >= 0) {
+                        this.itemBox.splice(index, 1);
+                    }
                     this.sumItemBox -= 1
                     this.cardSumItem.innerHTML = `${this.sumItemBox}`
                     btn.innerHTML = 'Add'
@@ -98,12 +97,12 @@ export class Products {
                 }
                 console.log(this.itemBox);
             }
-            if(btn?.getAttribute('detailData-id')){
+            if (btn?.getAttribute('detailData-id')) {
                 this.dataId = btn.getAttribute('detailData-id') as string
                 window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1'
             }
-            
-            
+
+
         });
 
         this.panel.addEventListener('click', () => {
@@ -181,10 +180,7 @@ export class Products {
         ).sort(this.sortOption); // filter there
         this.container.innerHTML = output.reduce((acc, item) => acc + this.createItem(item), '');
         this.foundItems = output.length
-        this.showFoundItem(output.length)
-
-
-
+        this.showFoundItem(output.length);
     }
 
     createItem = (item: product) => `
@@ -215,14 +211,6 @@ export class Products {
     closeSortOptionMenu(event: Event) {
         const target = (event.target as HTMLElement).closest('.dropbtn');
 
-        if (!target) {
-            /* У тебя ещё планируются выпадающие штуки?
-            const dropdowns = this.panel.querySelectorAll("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-                dropdowns[i].classList.remove('show');
-            }
-            */
-            this.dropMenu.classList.remove('show');
-        }
+        if (!target) { this.dropMenu.classList.remove('show'); }
     }
 }

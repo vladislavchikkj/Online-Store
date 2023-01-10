@@ -13,7 +13,7 @@ class App {
     private goods: number[] = [];
 
     private header: Header;
-    private main: IMain;
+    private main: Main;
     private footer: Footer;
 
 

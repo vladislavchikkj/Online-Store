@@ -4,21 +4,20 @@ export class StartPage implements IMain {
     private container: HTMLElement;
 
     constructor(place: HTMLElement) {
-        place.innerHTML = this.generate();
+        place.innerHTML = this.render();
 
         this.container = place.querySelector('.main-page') as HTMLElement;
 
     }
 
-    generate() {
+    render() {
         return `
         <div class="main-page">
             <div class="main-page__box">
                 Online-store
                 <a href="#catalog-page" class="btn">В каталог</a>
             </div>
-            <div class="catalog"> 
-        </div>
-      </div></div>`;
+            <div class="catalog"></div>
+        </div></div>`;
     }
 } 

@@ -35,7 +35,9 @@ export interface IPageList {
 }
 
 export interface IMain {
+    render(): string
 
+    save?: () => void;
 }
 
 export interface IFilterCollection {

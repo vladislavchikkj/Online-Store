@@ -3,7 +3,7 @@ import { IMain, product } from '../../interfaces/interfaces';
 type item = { product: product, count: number };
 
 
-export class Cart implements IMain {
+export class Cart {
     private container: HTMLElement;
 
 
