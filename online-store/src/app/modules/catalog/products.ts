@@ -60,7 +60,7 @@ export class Products {
             
             if (item !== null) {
                 this.dataId = item.getAttribute('data-id') as string
-                window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1'
+                window.location.hash = this.dataId ? `item-page/${this.dataId}` : 'error-page'
             };
 
             let btn = (e.target as HTMLElement).closest('.buttons__i');
