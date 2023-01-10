@@ -21,14 +21,17 @@ export class Products {
     private dataId: string | null;
     private sizeItemBtn: HTMLElement;
     private itemBox : string[];
+    private totalBox : number;
     private sumItemBox : number;
     private cardSumItem: HTMLElement;
+    private totalBar: HTMLElement;
 
 
     constructor(place: HTMLElement, id: string) {
         this.foundItems = 30;
         this.dataId = ''
         this.itemBox = []
+        this.totalBox = 0
         this.sumItemBox = 0
         place.insertAdjacentHTML('beforeend', this.generate());
 
@@ -42,6 +45,7 @@ export class Products {
         this.currItems = place.querySelector('.item-card') as HTMLElement;
         this.sizeItemBtn = place.querySelector('.view-mode') as HTMLElement;
         this.cardSumItem = document.querySelector('.number-elemenst') as HTMLElement;
+        this.totalBar = document.querySelector('.total-num') as HTMLElement;
 
         
         this.sizeItemBtn.addEventListener('click', (e) => {
@@ -74,6 +78,8 @@ export class Products {
                     this.cardSumItem.innerHTML = `${this.sumItemBox}`
                     btn.innerHTML = 'Drop'
                     btn.classList.add('drop')
+                    this.totalBox += this.products[+this.dataId].price
+                    this.totalBar.innerHTML = `${this.totalBox}`
                     return
                 }
                 if(btn.classList.contains('drop') && this.itemBox.includes(this.dataId)){
@@ -85,6 +91,8 @@ export class Products {
                     this.cardSumItem.innerHTML = `${this.sumItemBox}`
                     btn.innerHTML = 'Add'
                     btn.classList.remove('drop')
+                    this.totalBox -= this.products[+this.dataId].price
+                    this.totalBar.innerHTML = `${this.totalBox}`
                     return
                 }
                 console.log(this.itemBox);
