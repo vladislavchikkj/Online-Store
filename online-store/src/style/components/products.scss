@@ -50,6 +50,9 @@
     &:hover{
         transform: scale(1.02);
     }
+
+    // opacity: 0;
+    // animation: ani 0.2s forwards;
 }
 .active{
     .item-card{
@@ -117,7 +120,7 @@
     z-index: 1;
 }
 
-.buttons__add, .buttons__detail{
+.buttons__i{
     display: flex;
     margin-bottom: 10px;
     width: 75px;
@@ -132,10 +135,12 @@
     border: none;      
     border-radius: 5px;      
     cursor: pointer;
+    transition: all .5s;
 }
 
-.buttons__delete{
-
+.drop{
+    transition: all .5s;
+    background-color: rgb(51, 162, 170);
 }
 
 .search-form{
@@ -202,3 +207,9 @@
         }       
     }
 }
+
+
+@keyframes ani {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }

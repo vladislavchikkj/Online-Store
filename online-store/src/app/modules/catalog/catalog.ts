@@ -36,6 +36,9 @@ export class Catalog implements IMain {
 
 
     }
+    save() {
+        
+    }
 
     generate() {
         return `<div class="catalog-page"></div>`;

@@ -5,7 +5,6 @@ import { Loader } from "../catalog/loader";
 export class ItemPage implements IMain {
     private container: HTMLElement;
     private dataId: number;
-    private loader: Loader;
     protected imageCard: HTMLElement;
     private currImageCard: HTMLElement;
 
@@ -14,8 +13,6 @@ export class ItemPage implements IMain {
         this.container = place.querySelector('.item-page') as HTMLElement;
         
         this.dataId = +dataId.split('/')[1];
-        
-        this.loader = new Loader();
         
         place.innerHTML = this.generate();
         
