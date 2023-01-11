@@ -1,6 +1,4 @@
-import { IMain, product } from '../../interfaces/interfaces';
-
-type item = { product: product, count: number };
+import { IMain, product, item } from '../../interfaces/interfaces';
 
 type promo = {
     promo: string,

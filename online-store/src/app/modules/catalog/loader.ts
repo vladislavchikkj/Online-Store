@@ -1,10 +1,6 @@
 export class Loader {
     private _addres: string = 'https://dummyjson.com/products';
-    //private options: RequestInit = null;
-
-    constructor() {
-
-    }
+    //private options: RequestInit = null;W
 
     get addres() { return this._addres };
 

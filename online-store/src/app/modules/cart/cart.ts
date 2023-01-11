@@ -1,6 +1,5 @@
-import { IMain, product } from '../../interfaces/interfaces';
+import { IMain, product, item, updateAction } from '../../interfaces/interfaces';
 
-type item = { product: product, count: number };
 
 
 export class Cart {
@@ -19,10 +18,8 @@ export class Cart {
 
 
 
-    constructor(place: HTMLElement) {
-        const storagedProd = localStorage.getItem('carded') as string;
-
-        if (storagedProd) this.productsSource = JSON.parse(storagedProd) as Array<item>;
+    constructor(place: HTMLElement, cart?: item[]) {
+        this.productsSource = cart || [];
 
         this.products = this.productsSource;
 
@@ -125,7 +122,13 @@ export class Cart {
                 if (id === prodID) product = this.productsSource[index];
                 else product = this.productsSource.find((item) => item.product.id === id) as item;
 
-                product.count = (button.value === '+') ? product.count + 1 : product.count - 1;
+                if (button.value === "+") {
+                    product.count += 1;
+
+                }
+                else if (button.value === "-") {
+                    product.count -= 1;
+                }
 
                 this.productsSource = this.productsSource.filter((item) => (item.count > 0));
 
@@ -133,7 +136,10 @@ export class Cart {
 
                 this.setOutputItems();
 
-                this.container.dispatchEvent(new Event('update', { bubbles: true }));
+                this.container.dispatchEvent(new CustomEvent('update', {
+                    bubbles: true,
+                    detail: { product: this.productsSource, action: "change_count" },
+                }));
             }
         })
     }
