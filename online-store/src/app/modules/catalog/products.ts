@@ -37,8 +37,6 @@ export class Products {
 
         this.itemBox = new Set<product>(active.map((item) => item.product));
 
-        console.log(this.itemBox)
-
         this.container = place.querySelector('.products__items') as HTMLElement;
         this.panel = place.querySelector('.dropdown') as HTMLElement;
         this.dropMenu = place.querySelector('.dropdown-content') as HTMLElement;

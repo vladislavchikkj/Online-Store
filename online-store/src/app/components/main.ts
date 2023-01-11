@@ -63,7 +63,6 @@ export class Main {
 
 
         this.container.addEventListener('update', (e: CustomEventInit<updateAction>) => {
-            console.log(true)
             const detail = e.detail as updateAction;
 
             const action = detail.action;

@@ -5,7 +5,6 @@ import { IMain, product, item, updateAction } from '../../interfaces/interfaces'
 export class Cart {
     private container: HTMLElement;
 
-
     private count = 4;
     private page = 1;
 
@@ -18,8 +17,8 @@ export class Cart {
 
 
 
-    constructor(place: HTMLElement, cart?: item[]) {
-        this.productsSource = cart || [];
+    constructor(place: HTMLElement) {
+        this.productsSource = [];
 
         this.products = this.productsSource;
 
@@ -49,6 +48,9 @@ export class Cart {
     set input(list: item[]) {
         this.productsSource = list || this.productsSource;
 
+        this.pageController.max = `${Math.ceil(this.productsSource.length / this.count)}`;
+        this.pageController.value = `1`;
+
         this.setOutputItems();
     }
 
@@ -66,13 +68,14 @@ export class Cart {
     }
 
     render(): string {
+
         return `
             <section class="basket-page__cart cart">
                 <header class="cart__header">
                     <h2 class="cart__title">Товары в корзине</h2>
                     <div class = "cart__paginator">
                         <label>Max: <input type = "number" class="cart__settings-pagination" min = 2 max = 7 value = 4 id="max-count"></label>
-                        <label>Page: <input type = "number" class="cart__settings-pagination" min = 1 max = ${this.products.length / this.count} value = 1 id="page"></label>
+                        <label>Page: <input type = "number" class="cart__settings-pagination" min = 1 max = 100 value = 1 id="page"></label>
                     </div>
                 </header>
                 <div class="cart__items items"></div>
@@ -88,7 +91,7 @@ export class Cart {
                 <img src="${item.product.images[0]}" alt="${item.product.title}" class="item__image">
                 <div class="item__informations">
                     <h4 class="item__title">${item.product.title}</h4>
-                    <p class="item__decription">${item.product.decription}</p>
+                    <p class="item__decription">${item.product.description}</p>
                 </div>
                 <div class="item__count-container">
                     <p class="item__count">На складе:  ${item.product.stock}</p>

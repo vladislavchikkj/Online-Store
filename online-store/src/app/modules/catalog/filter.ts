@@ -100,7 +100,6 @@ export class Filter {
                     detail: this.filters,
                 })
             );
-            console.log(this.filters);
         });
     }
 

@@ -152,6 +152,8 @@ export class СashRegister implements IMain {
         this.cart = new Cart(this.container);
         this.cart.input = cart;
 
+        //console.log(cart)
+
         this.reckoning = new Reckoning(this.container);
 
         this.reckoning.input = this.cart.output;
