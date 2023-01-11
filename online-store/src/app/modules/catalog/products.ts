@@ -74,21 +74,21 @@ export class Products {
                 this.dataId = btn.getAttribute('data-id') as string;
 
                 const index = +(btn.getAttribute('data-index') as string);
-                const product = this.products[index];
+                const productItem = this.products[index];
 
-                if (!this.itemBox.has(product)) {
-                    this.itemBox.add(product);
+                if (!this.itemBox.has(productItem)) {
+                    this.itemBox.add(productItem);
                     this.container.dispatchEvent(new CustomEvent('update', {
                         bubbles: true,
-                        detail: { product: product, action: "add" },
+                        detail: { product: productItem, action: "add" },
                     }));
 
                 }
                 else if (btn.classList.contains('drop')) {
-                    this.itemBox.delete(product);
+                    this.itemBox.delete(productItem);
                     this.container.dispatchEvent(new CustomEvent('update', {
                         bubbles: true,
-                        detail: { product: product, action: "delete" },
+                        detail: { product: productItem, action: "delete" },
                     }));
                 }
 
@@ -97,8 +97,9 @@ export class Products {
 
             }
             else if (btn?.getAttribute('detailData-id')) {
-                this.dataId = btn.getAttribute('detailData-id') as string
-                window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1'
+                this.dataId = btn.getAttribute('detailData-id') as string;
+
+                window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1';
             }
         });
 
