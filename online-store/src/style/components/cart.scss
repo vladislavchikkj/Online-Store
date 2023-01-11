@@ -27,16 +27,18 @@
         
         border-bottom: 1px solid black;
     }
-
+   
     &__paginator{
         width: 270px;
 
         display: flex;
         justify-content: space-between;
     }
+         /*
     &__settings-pagination{
         width: 40px;
     }
+    */
 }
 
 

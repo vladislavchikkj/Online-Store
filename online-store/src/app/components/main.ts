@@ -118,8 +118,8 @@ export class Main {
         const reg = new RegExp(/item-page\/\d/g)
         const hash = window.location.hash.slice(1);
         if (hash === 'start-page' || hash === '') this._page = new StartPage(this.container);
-        if (hash === 'catalog-page') this._page = new Catalog(this.container, this.products, this.itemList);
-        if (hash === 'cart-page') this._page = new СashRegister(this.container, this.itemList);
+        else if (hash === 'catalog-page') this._page = new Catalog(this.container, this.products, this.itemList);
+        else if (hash === 'cart-page') this._page = new СashRegister(this.container, this.itemList);
         else if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
         else this._page = new ErrorPage(this.container);
     }
