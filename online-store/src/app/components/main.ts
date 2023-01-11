@@ -48,10 +48,10 @@ export class Main {
         const reg = new RegExp(/item-page\/\d/g)
         const hash = window.location.hash.slice(1);
         if (hash === 'start-page' || hash === '') this._page = new StartPage(this.container);
-        if (hash === 'catalog-page') this._page = new Catalog(this.container);
-        if (hash === 'cart-page') this._page = new СashRegister(this.container);
-        if (hash === 'error-page') this._page = new ErrorPage(this.container);
-        if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
+        else if (hash === 'catalog-page') this._page = new Catalog(this.container);
+        else if (hash === 'cart-page') this._page = new СashRegister(this.container);
+        else if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
+        else this._page = new ErrorPage(this.container);
     }
     checkInitialPage() {
 
