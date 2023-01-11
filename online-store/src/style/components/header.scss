@@ -1,0 +1,87 @@
+$main-page-width: 1000px;
+
+//$container-paddings: 20px;
+
+@function toPerc($pixel-input, $pixelfrom: $main-page-weight) {
+    @return math.div($pixel-input * 100%, $pixelfrom);
+}
+
+@mixin width-block($block-width, $max-width: $main-page-weight) {
+    width: toPerc($block-width);
+    max-width: $max-width;
+}
+
+
+.page{
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__header{
+    }
+    &__main{
+    }
+}
+
+.header{
+    width: 100%;
+
+    padding: 15px;
+
+    display: flex;
+    justify-content: center;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    
+
+    border-bottom: 1px solid gray;
+    border-radius: 0%;
+    box-shadow:none;
+    
+    &__page-title{
+        cursor: pointer;
+        font-size: 2em;
+        text-decoration: none;
+        color: black;
+    }
+
+}
+
+
+.card{
+    position: relative;
+    left: 0;
+    top:0;
+
+    width: 32px;
+    height: 32px;
+
+    background: url("./assets/icons/i-cart-black-stroke.svg") center/contain no-repeat;
+    .number-elemenst{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        transform: translate(-40%, 35%);
+
+        width: 1.2em;
+        height: 1.2em;
+        padding: 1px;
+
+        border-radius: 50%;
+        color: rgb(0, 0, 0);
+        background-color: red;
+
+        font-size: 0.75rem;
+        text-align: center;
+        vertical-align: middle;
+    }
+} 
+.total-bar{
+    display: flex;
+    gap: 10px;
+}

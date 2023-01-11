@@ -1,0 +1,45 @@
+*{
+    font-family: 'Kanit', sans-serif;
+}
+
+body{
+    background-color: rgb(170, 51, 111);
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.wrapperCurrentPage{
+    flex: 1 1 auto;
+}
+.container{
+    flex: 1 1 auto;
+    width: calc(100% - 100px);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 60px;
+    // height: 1000px; // Del
+    margin: 40px 0;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.36);
+    border-radius: 20px;
+    position: relative;
+}
+
+.catalog-page{
+    display: flex;
+    gap: 40px;
+}
+
+// component style
+
+@import "./components/header.scss";
+@import "./components/main-page.scss";
+@import "./components/item-page.scss";
+@import "./components/products.scss";
+@import "./components/footer.scss";
+@import "./components/filter.scss";
+@import "./components/dropdown.scss";
+@import "./components/form.scss";
+@import "./components/errror.scss";
