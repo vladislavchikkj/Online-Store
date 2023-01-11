@@ -33,7 +33,7 @@ export class Cart {
 
         this.addCountHandler();
 
-
+ 
         this.countController.addEventListener('input', () => {
             this.pageController.max = `${Math.ceil(this.productsSource.length / this.count)}`;
             this.setOutputItems();
@@ -42,7 +42,6 @@ export class Cart {
         this.pageController.addEventListener('input', () => {
             this.setOutputItems();
         });
-
     }
 
     set input(list: item[]) {
@@ -146,4 +145,7 @@ export class Cart {
             }
         })
     }
+    
+
+    
 }

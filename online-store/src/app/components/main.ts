@@ -120,8 +120,8 @@ export class Main {
         if (hash === 'start-page' || hash === '') this._page = new StartPage(this.container);
         if (hash === 'catalog-page') this._page = new Catalog(this.container, this.products, this.itemList);
         if (hash === 'cart-page') this._page = new СashRegister(this.container, this.itemList);
-        if (hash === 'error-page') this._page = new ErrorPage(this.container);
-        if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
+        else if (reg.test(hash)) this._page = new ItemPage(this.container, hash);
+        else this._page = new ErrorPage(this.container);
     }
     checkInitialPage() {
 
