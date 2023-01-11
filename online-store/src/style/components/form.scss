@@ -14,7 +14,7 @@
   }
   
   .form {
-    width: 600px;
+    width: 500px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -23,7 +23,7 @@
   
     &__title {
       color: white;
-      margin: 40px 0;
+      margin: 15px 0;
       &--success {
         white-space: pre-line;
         line-height: 3rem;

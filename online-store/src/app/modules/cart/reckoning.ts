@@ -132,7 +132,7 @@ export class Reckoning {
         return `
         <div class="modal">
         <form class="form">
-            <h2 class="form__title">Personal details</h2>
+            <h2 class="form__title">Personal info</h2>
             <ul class="personal-detail form__personal-detail">
             <li class="personal-detail__item">
                 <input 
@@ -148,7 +148,7 @@ export class Reckoning {
                 <input
                 class="personal-detail__input" 
                 type="text" 
-                placeholder="Delivery address"
+                placeholder="Address"
                 pattern="^([A-Za-zА-Яа-яЁё]{5,}\\s?){3,}" 
                 title='Format: Minimum three words. Minimal length of each = 5' 
                 data-cartModal-inputField="address"
@@ -176,7 +176,7 @@ export class Reckoning {
             </li>
             </ul>
 
-            <h2 class="form__title">Credit card details</h2>
+            <h2 class="form__title">Credit card</h2>
             <ul class="card-detail form__card-detail">
             <li class="card-detail__item">  
                 <input 
