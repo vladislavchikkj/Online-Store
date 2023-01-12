@@ -99,8 +99,7 @@ export class Filter {
                     bubbles: true,
                     detail: this.filters,
                 })
-                );
-                console.log(this.filters);
+            );
         });
     }
 
@@ -118,6 +117,7 @@ export class Filter {
     }
 
     generateGroup() {
+        this.container.innerHTML = '';
         for (const name in this.categories) {
             const type = this.categories[name].type === 'categories' ? 'filter__group' : 'filter__range';
 

@@ -26,6 +26,16 @@ export type productList = {
     limit: number,
 }
 
+export type item = {
+    product: product,
+    count: number
+};
+
+export type updateAction = {
+    product: product | item[];
+    action: "add" | "delete" | "change_count";
+}
+
 export interface IComponent {
     render(callback?: () => void): string;
 }
@@ -38,6 +48,10 @@ export interface IMain {
     render(): string
 
     save?: () => void;
+
+    inputActive?(active: item[], all?: product[]): void;
+    inputProducts?(value: product[]): void;
+
 }
 
 export interface IFilterCollection {

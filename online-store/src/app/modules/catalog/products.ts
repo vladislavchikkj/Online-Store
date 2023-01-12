@@ -1,4 +1,4 @@
-import { product } from "../../interfaces/interfaces";
+import { item, product } from "../../interfaces/interfaces";
 
 interface ISort {
     (a: product, b: product): number
@@ -20,20 +20,22 @@ export class Products {
     private currItems: HTMLElement;
     private dataId: string | null;
     private sizeItemBtn: HTMLElement;
-    private itemBox: string[];
+    private itemBox: Set<product>;
     private totalBox: number;
     private sumItemBox: number;
     private cardSumItem: HTMLElement;
     private totalBar: HTMLElement;
 
 
-    constructor(place: HTMLElement, id: string) {
+    constructor(place: HTMLElement, active: item[]) {
         this.foundItems = 30;
         this.dataId = '';
-        this.itemBox = [];
+        this.itemBox = new Set();
         this.totalBox = 0;
         this.sumItemBox = 0;
         place.insertAdjacentHTML('beforeend', this.generate());
+
+        this.itemBox = new Set<product>(active.map((item) => item.product));
 
         this.container = place.querySelector('.products__items') as HTMLElement;
         this.panel = place.querySelector('.dropdown') as HTMLElement;
@@ -59,7 +61,7 @@ export class Products {
 
         });
         this.items.addEventListener('click', (e) => {
-            let item = (e.target as HTMLElement).closest('.item__wrapper');
+            const item = (e.target as HTMLElement).closest('.item__wrapper');
 
             if (item !== null) {
                 this.dataId = item.getAttribute('data-id') as string
@@ -69,40 +71,36 @@ export class Products {
             let btn = (e.target as HTMLElement).closest('.buttons__i');
 
             if (btn?.getAttribute('data-id')) {
-                this.dataId = btn.getAttribute('data-id') as string
+                this.dataId = btn.getAttribute('data-id') as string;
 
-                if (!this.itemBox.includes(this.dataId)) {
-                    this.itemBox.push(this.dataId);
-                    this.sumItemBox += 1
-                    this.cardSumItem.innerHTML = `${this.sumItemBox}`
-                    btn.innerHTML = 'Drop'
-                    btn.classList.add('drop')
-                    this.totalBox += this.products[+this.dataId].price
-                    this.totalBar.innerHTML = `${this.totalBox}`
-                    console.log(this.itemBox);
-                    return
+                const index = +(btn.getAttribute('data-index') as string);
+                const productItem = this.products[index];
+
+                if (!this.itemBox.has(productItem)) {
+                    this.itemBox.add(productItem);
+                    this.container.dispatchEvent(new CustomEvent('update', {
+                        bubbles: true,
+                        detail: { product: productItem, action: "add" },
+                    }));
+
                 }
-                if (btn.classList.contains('drop') && this.itemBox.includes(this.dataId)) {
-                    var index = this.itemBox.indexOf(this.dataId);
-                    if (index >= 0) {
-                        this.itemBox.splice(index, 1);
-                    }
-                    this.sumItemBox -= 1
-                    this.cardSumItem.innerHTML = `${this.sumItemBox}`
-                    btn.innerHTML = 'Add'
-                    btn.classList.remove('drop')
-                    this.totalBox -= this.products[+this.dataId].price
-                    this.totalBar.innerHTML = `${this.totalBox}`
-                    return
+                else if (btn.classList.contains('drop')) {
+                    this.itemBox.delete(productItem);
+                    this.container.dispatchEvent(new CustomEvent('update', {
+                        bubbles: true,
+                        detail: { product: productItem, action: "delete" },
+                    }));
                 }
-                console.log(this.itemBox);
-            }
-            if (btn?.getAttribute('detailData-id')) {
-                this.dataId = btn.getAttribute('detailData-id') as string
-                window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1'
-            }
 
+                btn.classList.toggle('drop');
+                btn.textContent = (!btn.classList.contains('drop')) ? 'Add' : 'Drop';
 
+            }
+            else if (btn?.getAttribute('detailData-id')) {
+                this.dataId = btn.getAttribute('detailData-id') as string;
+
+                window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1';
+            }
         });
 
         this.panel.addEventListener('click', () => {
@@ -123,11 +121,6 @@ export class Products {
 
         this.addHandler(this.searchForm);
     }
-
-    protected generateItemById() { // this 
-        console.log(this.dataId);
-    }
-
 
     private sortSelect(option: string): ISort {
         if (option === 'rating')
@@ -170,21 +163,31 @@ export class Products {
         `
 
     set input(items: product[]) {
+
+
         this.products = items;
         this.output();
     }
+
+    set activate(active: item[]) {
+        this.itemBox = new Set<product>(active.map((item) => item.product));
+    }
+
 
     public output(): void {
         const output = this.products.filter(item =>
             item.title.toLocaleLowerCase().includes(this.searchForm.value.toLocaleLowerCase())
         ).sort(this.sortOption); // filter there
-        this.container.innerHTML = output.reduce((acc, item) => acc + this.createItem(item), '');
+        this.container.innerHTML = output.reduce((acc, item, index) => acc + this.createItem(item, index), '');
         this.foundItems = output.length
         this.showFoundItem(output.length);
     }
 
-    createItem = (item: product) => `
-        <a class="item-card">
+    createItem = (item: product, index: number) => {
+        const nameButton = (this.itemBox.has(item)) ? `Drop` : `Add`;
+        const dropstyle = (this.itemBox.has(item)) ? `drop` : ``;
+
+        return `<a class="item-card">
             <div class="item__wrapper" data-id = "${item.id}">
                 <div class="wrapper__title">${item.title}</div>
                 <div class="wrapper__item-info">
@@ -199,11 +202,11 @@ export class Products {
             </div>
 
             <div class="item__buttons">
-                <button data-id = "${item.id}" class="buttons__i">Add</button>
+                <button data-id = "${item.id}" data-index = "${index}" class="buttons__i ${dropstyle}">${nameButton}</button>
                 <button detailData-id = "${item.id}" class="buttons__i">Detail</button>
             </div>
-        </a>
-    `
+        </a>`
+    }
     toggleSortOptionMenu() {
         this.dropMenu.classList.toggle("show");
     }
@@ -213,4 +216,9 @@ export class Products {
 
         if (!target) { this.dropMenu.classList.remove('show'); }
     }
+
+    get getChoised(): product[] {
+        return Array.from(this.itemBox);
+    }
+
 }

@@ -1,10 +1,10 @@
-import { IMain, product } from '../../interfaces/interfaces';
+import { IMain, product, item } from '../../interfaces/interfaces';
 
 import { Cart } from "./cart";
 import { Reckoning } from './reckoning';
 
 
-type item = { product: product, count: number };
+
 
 
 export class СashRegister implements IMain {
@@ -144,13 +144,15 @@ export class СashRegister implements IMain {
     private cart: Cart;
     private reckoning: Reckoning;
 
-    constructor(place: HTMLElement) {
+    constructor(place: HTMLElement, cart: item[]) {
         place.innerHTML = this.render();
 
         this.container = place.querySelector(".basket-page") as HTMLElement;
 
         this.cart = new Cart(this.container);
-        this.cart.input = this.list;
+        this.cart.input = cart;
+
+        //console.log(cart)
 
         this.reckoning = new Reckoning(this.container);
 
@@ -160,6 +162,10 @@ export class СashRegister implements IMain {
         this.container.addEventListener('update', () => {
             this.reckoning.input = this.cart.output;
         });
+    }
+
+    inputActive(items: item[]) {
+        this.reckoning.input = this.cart.input = items;
     }
 
     render(): string {
