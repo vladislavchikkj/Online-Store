@@ -1,4 +1,5 @@
 import { item, product } from "../../interfaces/interfaces";
+import { fakeDB } from "../external/fakeDB";
 
 interface ISort {
     (a: product, b: product): number
@@ -11,31 +12,34 @@ export class Products {
     protected back: HTMLElement;
     protected searchForm: HTMLInputElement;
 
-    private products: product[] = [];
+    private fakeDB: fakeDB;
+    private displayed: product[] = [];
+
+
     private sortOption: ISort | undefined;
     private seachResult: HTMLInputElement | undefined;
     private foundItemsPlace: HTMLElement;
     private foundItems: number;
     private items: HTMLElement;
     private currItems: HTMLElement;
-    private dataId: string | null;
     private sizeItemBtn: HTMLElement;
-    private itemBox: Set<product>;
+    private choisedBox: Set<number>;
+    /*
     private totalBox: number;
     private sumItemBox: number;
     private cardSumItem: HTMLElement;
     private totalBar: HTMLElement;
+    */
+
+    constructor(place: HTMLElement, fakeDB: fakeDB) {
+        this.fakeDB = fakeDB;
 
 
-    constructor(place: HTMLElement, active: item[]) {
         this.foundItems = 30;
-        this.dataId = '';
-        this.itemBox = new Set();
-        this.totalBox = 0;
-        this.sumItemBox = 0;
+
         place.insertAdjacentHTML('beforeend', this.generate());
 
-        this.itemBox = new Set<product>(active.map((item) => item.product));
+        this.choisedBox = new Set(this.fakeDB.getSelected().map((item) => item.id));
 
         this.container = place.querySelector('.products__items') as HTMLElement;
         this.panel = place.querySelector('.dropdown') as HTMLElement;
@@ -46,8 +50,6 @@ export class Products {
         this.items = place.querySelector('.products__items') as HTMLElement;
         this.currItems = place.querySelector('.item-card') as HTMLElement;
         this.sizeItemBtn = place.querySelector('.view-mode') as HTMLElement;
-        this.cardSumItem = document.querySelector('.number-elemenst') as HTMLElement;
-        this.totalBar = document.querySelector('.total-num') as HTMLElement;
 
 
         this.sizeItemBtn.addEventListener('click', (e) => {
@@ -55,51 +57,41 @@ export class Products {
             if (btn.className === 'big-v') {
                 this.items.classList.add('active');
             }
-            if (btn.className === 'small-v') {
+            else if (btn.className === 'small-v') {
                 this.items.classList.remove('active');
             }
 
         });
         this.items.addEventListener('click', (e) => {
-            const item = (e.target as HTMLElement).closest('.item__wrapper');
+            const item = (e.target as HTMLElement).closest<HTMLElement>('.item__wrapper');
+            const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.buttons__i');
 
-            if (item !== null) {
-                this.dataId = item.getAttribute('data-id') as string
-                window.location.hash = this.dataId ? `item-page/${this.dataId}` : 'error-page'
+            if (item) {
+                const ID = item.dataset.id as string
+                window.location.hash = ID ? `item-page/${ID}` : 'error-page'
             };
 
-            let btn = (e.target as HTMLElement).closest('.buttons__i');
 
-            if (btn?.getAttribute('data-id')) {
-                this.dataId = btn.getAttribute('data-id') as string;
+            if (btn?.name === "add") {
+                const ID: number = +(btn.dataset.id as string);
 
-                const index = +(btn.getAttribute('data-index') as string);
-                const productItem = this.products[index];
-
-                if (!this.itemBox.has(productItem)) {
-                    this.itemBox.add(productItem);
-                    this.container.dispatchEvent(new CustomEvent('update', {
-                        bubbles: true,
-                        detail: { product: productItem, action: "add" },
-                    }));
-
+                if (!this.choisedBox.has(ID)) {
+                    this.choisedBox.add(ID);
+                    this.fakeDB.add(ID);
                 }
-                else if (btn.classList.contains('drop')) {
-                    this.itemBox.delete(productItem);
-                    this.container.dispatchEvent(new CustomEvent('update', {
-                        bubbles: true,
-                        detail: { product: productItem, action: "delete" },
-                    }));
+                else {
+                    this.choisedBox.delete(ID);
+                    this.fakeDB.delete(ID);
                 }
 
                 btn.classList.toggle('drop');
                 btn.textContent = (!btn.classList.contains('drop')) ? 'Add' : 'Drop';
 
             }
-            else if (btn?.getAttribute('detailData-id')) {
-                this.dataId = btn.getAttribute('detailData-id') as string;
+            else if (btn?.name === "details") {
+                const ID = btn.dataset.id as string;
 
-                window.location.hash = this.dataId ? `item-page/${this.dataId}` : '1';
+                window.location.hash = ID ? `item-page/${ID}` : '1';
             }
         });
 
@@ -162,48 +154,47 @@ export class Products {
         </div>
         `
 
-    set input(items: product[]) {
-
-
-        this.products = items;
+    set display(products: product[]) {
+        this.displayed = products;
         this.output();
     }
 
     set activate(active: item[]) {
-        this.itemBox = new Set<product>(active.map((item) => item.product));
+        this.choisedBox = new Set<number>(active.map((item) => item.id));
     }
 
 
-    public output(): void {
-        const output = this.products.filter(item =>
-            item.title.toLocaleLowerCase().includes(this.searchForm.value.toLocaleLowerCase())
-        ).sort(this.sortOption); // filter there
-        this.container.innerHTML = output.reduce((acc, item, index) => acc + this.createItem(item, index), '');
+    public output() {
+        const searched = this.searchForm.value.toLocaleLowerCase()
+
+        const output = this.displayed.filter((item) => item.title.toLocaleLowerCase().includes(searched))
+            .sort(this.sortOption); // filter there
+        this.container.innerHTML = output.reduce((acc, item, index) => acc + this.createItem(item), '');
         this.foundItems = output.length
         this.showFoundItem(output.length);
     }
 
-    createItem = (item: product, index: number) => {
-        const nameButton = (this.itemBox.has(item)) ? `Drop` : `Add`;
-        const dropstyle = (this.itemBox.has(item)) ? `drop` : ``;
+    createItem = (product: product) => {
+        const nameButton = (this.choisedBox.has(product.id)) ? `Drop` : `Add`;
+        const dropstyle = (this.choisedBox.has(product.id)) ? `drop` : ``;
 
         return `<a class="item-card">
-            <div class="item__wrapper" data-id = "${item.id}">
-                <div class="wrapper__title">${item.title}</div>
+            <div class="item__wrapper" data-id = "${product.id}">
+                <div class="wrapper__title">${product.title}</div>
                 <div class="wrapper__item-info">
-                    <div class="wrapper__price">Price: ${item.price}</div>
-                    <div class="wrapper__price">Discount: ${item.discountPercentage}</div>
-                    <div class="wrapper__price">Rarting: ${item.rating}</div>
-                    <div class="wrapper__price">Stock: ${item.stock}</div>
-                    <div class="wrapper__price">Brand: ${item.brand}</div>
-                    <div class="wrapper__price">Category: ${item.category}</div>
+                    <div class="wrapper__price">Price: ${product.price}</div>
+                    <div class="wrapper__price">Discount: ${product.discountPercentage}</div>
+                    <div class="wrapper__price">Rarting: ${product.rating}</div>
+                    <div class="wrapper__price">Stock: ${product.stock}</div>
+                    <div class="wrapper__price">Brand: ${product.brand}</div>
+                    <div class="wrapper__price">Category: ${product.category}</div>
                 </div>
-                <div class="item__img" style="background-image: url(${item.images[0]})"></div>
+                <div class="item__img" style="background-image: url(${product.images[0]})"></div>
             </div>
 
             <div class="item__buttons">
-                <button data-id = "${item.id}" data-index = "${index}" class="buttons__i ${dropstyle}">${nameButton}</button>
-                <button detailData-id = "${item.id}" class="buttons__i">Detail</button>
+                <button data-id = "${product.id}" name="add" class="buttons__i ${dropstyle}">${nameButton}</button>
+                <button data-id = "${product.id}" name="details" class="buttons__i">Detail</button>
             </div>
         </a>`
     }
@@ -216,9 +207,9 @@ export class Products {
 
         if (!target) { this.dropMenu.classList.remove('show'); }
     }
-
+    /*
     get getChoised(): product[] {
         return Array.from(this.itemBox);
     }
-
+    */
 }

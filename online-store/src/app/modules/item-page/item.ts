@@ -1,84 +1,108 @@
-import { IMain, product, productList } from "../../interfaces/interfaces";
+import { IMain, product } from "../../interfaces/interfaces";
 import { Products } from "../catalog/products";
-import { Loader } from "../catalog/loader";
+import { fakeDB } from "../external/fakeDB";
 
 export class ItemPage implements IMain {
-    private productList: product[] = [];
-
-    private productItem: product;
     //private ID: string;
 
     private container: HTMLElement;
-    private dataId: number;
-    protected imageCard: HTMLElement;
-    private currImageCard: HTMLElement;
 
-    constructor(place: HTMLElement, dataId: string, products: product[]) {
-        this.productList = products;
+    private dataId: number;
+
+    private product: product | undefined;
+    private fakeDB: fakeDB;
+    private added = false;
+
+    protected imageCard: HTMLElement | null = null;
+    private currImageCard: HTMLElement | null = null;
+    private addButton: HTMLButtonElement | null = null;
+
+    constructor(place: HTMLElement, dataId: string, fakeDB: fakeDB) {
+        place.innerHTML = this.render();
+
+        this.fakeDB = fakeDB;
 
         this.container = place.querySelector('.item-page') as HTMLElement;
 
-        console.log(dataId)
-
         this.dataId = +dataId.split('/')[1];
 
+        this.update();
+    }
 
+    update() {
+        this.product = this.fakeDB.findFromAll(this.dataId);
 
-        this.productItem = this.productList.find((el) => +el.id === +this.dataId) as product;
+        if (!this.product) return;
 
-        console.log(this.productItem)
+        this.added = !!this.fakeDB.find(this.dataId);
 
-        place.innerHTML = this.render();
+        this.container.innerHTML = this.generateItem();
 
-        this.imageCard = place.querySelector('.inactive-image-wrapper') as HTMLElement;
-        this.currImageCard = place.querySelector('.item-image-current') as HTMLElement;
+        this.imageCard = this.container.querySelector('.inactive-image-wrapper') as HTMLElement;
+        this.currImageCard = this.container.querySelector('.item-image-current') as HTMLElement;
+        this.addButton = this.container.querySelector('.add-button') as HTMLButtonElement;
 
         this.imageCard.addEventListener('click', (e) => {
             let item = (e.target as HTMLElement);
-            this.currImageCard.style.backgroundImage = `${item.style.backgroundImage}`
+            (this.currImageCard as HTMLElement).style.backgroundImage = `${item.style.backgroundImage}`
         });
+
+        this.addButton.addEventListener('click', () => {
+            if (!this.added) { this.fakeDB.add(this.dataId); }
+            else { this.fakeDB.delete(this.dataId); }
+
+            this.added = !this.added;
+
+            const buttomText = (!this.added) ? "Add to cart" : "Delete from cart";
+            (this.addButton as HTMLButtonElement).innerText = buttomText;
+        })
     }
 
     render() {
+        return `<div class="item-page"></div>`;
+    }
 
+    generateItem() {
+        if (!this.product) return ``;
 
+        const images = Array.from(this.product.images);
 
+        images.length = 3;
 
-        // const currentItem = array[].this
-        return `
-        <div class="item-page">
-            <div class="item-page__path">store  &nbsp &#8594 &nbsp ${this.productItem.category} &#8594 &nbsp${this.productItem.brand} &#8594 &nbsp${this.productItem.title}</div>
-            <div class="item-page__wrapper">
-            <div class="wrapper-blocks">
-                <div class="curr-image-wrapper">
-                    <div class="item-image-current" style="background-image: url(${this.productItem.images[0]})"></div>
-                </div>
-                <div class="inactive-image-wrapper">
-                    <div class="item-image" style="background-image: url(${this.productItem.images[1]})"></div>
-                    <div class="item-image" style="background-image: url(${this.productItem.images[2]})"></div>
-                    <div class="item-image" style="background-image: url(${this.productItem.images[3]})"></div>
-                </div>
-                
+        const slides = images.reduce((slider, image) => slider + `<div class="item-image" style="background-image: url(${image})"></div>`, "");
 
-                </div>
-                <div class="item-text-wrap">
-                    <div class="title">${this.productItem.title}</div>
-                    <div class="descr">Description: ${this.productItem.description}</div>
-                    <div class="discount">Discount Percentage: ${this.productItem.discountPercentage}</div>
-                    <div class="rating">Rating: ${this.productItem.rating}</div>
-                    <div class="stock">Stock: ${this.productItem.stock}</div>
-                    <div class="brand">Brand: ${this.productItem.brand}</div>
-                    <div class="category">Category: ${this.productItem.category}</div>
-                    <div class="total">
-                        <div class="total-price">Price: $1000</div>
-                        <div class="total-btn">
-                            <button>Add to card</button>
-                            <button>Buy now</button>
+        const buttonName = (!this.added) ? "Add to cart" : "Delete from cart";
+
+        return `            
+            <div class="item-page__path">store  &nbsp &#8594 &nbsp ${this.product.category} &#8594 &nbsp${this.product.brand} &#8594 &nbsp${this.product.title}</div>
+                <div class="item-page__wrapper">
+                <div class="wrapper-blocks">
+                    <div class="curr-image-wrapper">
+                        <div class="item-image-current" style="background-image: url(${this.product.images[0]})"></div>
+                    </div>
+                    <div class="inactive-image-wrapper">
+                        ${slides}
+                    </div>
+                    
+
+                    </div>
+                    <div class="item-text-wrap">
+                        <div class="title">${this.product.title}</div>
+                        <div class="descr">Description: ${this.product.description}</div>
+                        <div class="discount">Discount Percentage: ${this.product.discountPercentage}</div>
+                        <div class="rating">Rating: ${this.product.rating}</div>
+                        <div class="stock">Stock: ${this.product.stock}</div>
+                        <div class="brand">Brand: ${this.product.brand}</div>
+                        <div class="category">Category: ${this.product.category}</div>
+                        <div class="total">
+                            <div class="total-price">Price: $1000</div>
+                            <div class="total-btn">
+                                <button class = "add-button">${buttonName}</button>
+                                <button>Buy now</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            </div>
-        </div>`;
+            </div>`
     }
 } 

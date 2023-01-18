@@ -1,8 +1,24 @@
-export class Header {
+import { fakeDB } from "../modules/external/fakeDB";
 
-    constructor(place: HTMLElement, lang: string = "ru") {
+export class Header {
+    private fakeDB: fakeDB;
+
+    private cartCountOutput: HTMLElement;
+    private cartPriceOutput: HTMLElement;
+
+    constructor(place: HTMLElement, fakeDB: fakeDB) {
+        this.fakeDB = fakeDB;
+
         place.insertAdjacentHTML('beforeend', this.render());
+
+        this.cartCountOutput = document.querySelector('.number-elemenst') as HTMLElement;
+        this.cartPriceOutput = document.querySelector('.total-num') as HTMLElement;
+
+        document.addEventListener("update", () => {
+            this.updateTotalCart();
+        });
     }
+
 
     render() {
         return `
@@ -20,4 +36,17 @@ export class Header {
             </header>
         `;
     }
-} ``
+
+    updateTotalCart() {
+        let count = 0;
+        let price = 0;
+
+        this.fakeDB.getSelected().forEach((item) => {
+            count += item.count;
+            price += item.count * item.product.price;
+        });
+
+        this.cartCountOutput.innerText = `${count}`;
+        this.cartPriceOutput.innerText = `${price}`;
+    }
+} 

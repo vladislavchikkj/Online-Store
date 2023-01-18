@@ -1,4 +1,5 @@
-import { IMain, product, item, updateAction } from '../../interfaces/interfaces';
+import { item } from '../../interfaces/interfaces';
+import { fakeDB } from '../external/fakeDB';
 
 
 
@@ -8,19 +9,15 @@ export class Cart {
     private count = 4;
     private page = 1;
 
-    private productsSource: item[] = [];
+    private fakeDB: fakeDB;
+    private itemsPage: item[] = [];
 
-    private products: item[] = [];
 
     private countController: HTMLInputElement;
     private pageController: HTMLInputElement;
 
-
-
-    constructor(place: HTMLElement) {
-        this.productsSource = [];
-
-        this.products = this.productsSource;
+    constructor(place: HTMLElement, fakeDB: fakeDB) {
+        this.fakeDB = fakeDB;
 
         place.innerHTML = this.render();
 
@@ -33,9 +30,9 @@ export class Cart {
 
         this.addCountHandler();
 
- 
+
         this.countController.addEventListener('input', () => {
-            this.pageController.max = `${Math.ceil(this.productsSource.length / this.count)}`;
+            this.pageController.max = `${Math.ceil(this.fakeDB.getSelected().length / this.count)}`;
             this.setOutputItems();
         });
 
@@ -44,30 +41,16 @@ export class Cart {
         });
     }
 
-    set input(list: item[]) {
-        this.productsSource = list || this.productsSource;
-
-        this.pageController.max = `${Math.ceil(this.productsSource.length / this.count)}`;
-        this.pageController.value = `1`;
-
-        this.setOutputItems();
-    }
-
-    get output(): item[] {
-        return this.productsSource;
-    }
-
     setOutputItems() {
         this.count = +this.countController.value;
         this.page = +this.pageController.value - 1;
 
-        this.products = this.productsSource.slice(this.count * this.page, this.count * (this.page + 1));
+        this.itemsPage = this.fakeDB.getSelected().slice(this.count * this.page, this.count * (this.page + 1));
 
-        this.container.innerHTML = this.products.reduce((acc, item, index) => acc + this.createItem(item, index + this.page * this.count), "");
+        this.container.innerHTML = this.itemsPage.reduce((acc, item, index) => acc + this.createItem(item, index + this.page * this.count), "");
     }
 
     render(): string {
-
         return `
             <section class="basket-page__cart cart">
                 <header class="cart__header">
@@ -106,46 +89,39 @@ export class Cart {
     }
     addCountHandler() {
         this.container.addEventListener('click', (e) => {
-            const item = (e.target as HTMLElement).closest<HTMLElement>(".item");
+            const itemCard = (e.target as HTMLElement).closest<HTMLElement>(".item");
 
-            if (!item) return;
+            if (!itemCard) return;
 
-            let index = +(item.dataset.index as string) - 1;
-            const id = +(item.dataset.id as string);
+            const id = +(itemCard.dataset.id as string);
 
             const button = (e.target as HTMLElement).closest<HTMLButtonElement>("button");
 
             if (button) {
-                let product: item;
-
-
-                const prodID = this.productsSource[index].product.id;
-
-                if (id === prodID) product = this.productsSource[index];
-                else product = this.productsSource.find((item) => item.product.id === id) as item;
 
                 if (button.value === "+") {
-                    product.count += 1;
+                    this.fakeDB.updateCount(id, +1);
 
                 }
                 else if (button.value === "-") {
-                    product.count -= 1;
+                    this.fakeDB.updateCount(id, -1);
                 }
 
-                this.productsSource = this.productsSource.filter((item) => (item.count > 0));
+                const max = Math.ceil(this.fakeDB.getSelected().length / this.count);
+                this.page = +this.pageController.value;
 
-                this.pageController.max = `${Math.ceil(this.productsSource.length / this.count)}`;
+                this.pageController.max = `${max}`;
+
+                this.pageController.value = (this.page > max) ? `${max}` : `${this.page}`;
 
                 this.setOutputItems();
-
-                this.container.dispatchEvent(new CustomEvent('update', {
-                    bubbles: true,
-                    detail: { product: this.productsSource, action: "change_count" },
-                }));
             }
-        })
+            else {
+                window.location.hash = id ? `item-page/${id}` : '1';
+            }
+        });
     }
-    
 
-    
+
+
 }

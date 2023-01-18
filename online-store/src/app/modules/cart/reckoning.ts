@@ -1,5 +1,6 @@
 import { IMain, product, item } from '../../interfaces/interfaces';
 import { validateFuncs } from '../../../archive/pages/utils/validator';
+import { fakeDB } from '../external/fakeDB';
 
 type promo = {
     promo: string,
@@ -7,7 +8,7 @@ type promo = {
 }
 
 export class Reckoning {
-    private products: item[] = [];
+    private fakeDB: fakeDB;
 
     private addPromoList = [
         {
@@ -39,10 +40,12 @@ export class Reckoning {
 
     private mainContainer: HTMLElement | null;
 
-    constructor(place: HTMLElement) {
+    constructor(place: HTMLElement, fakeDB: fakeDB) {
+        this.fakeDB = fakeDB;
+
         place.insertAdjacentHTML("beforeend", this.render());
 
-        this.container = place.querySelector(".basket-page") as HTMLElement;
+        this.container = place.querySelector(".reckoning") as HTMLElement;
 
         this.totalPriceOutput = place.querySelector(".reckoning__total-price") as HTMLElement;
         this.promoInput = place.querySelector(".reckoning__promo-input") as HTMLInputElement;
@@ -60,6 +63,10 @@ export class Reckoning {
         });
 
         this.updatePrice();
+
+        document.addEventListener('update', () => {
+            this.updatePrice();
+        });
 
         this.promoButton.addEventListener('click', () => {
             const promoInput = this.promoInput.value.toUpperCase();
@@ -88,19 +95,13 @@ export class Reckoning {
     }
 
     updatePrice() {
-        const count = this.products.reduce((acc, product) => acc + product.product.price * product.count, 0);
+        const count = this.fakeDB.getSelected().reduce((acc, product) => acc + product.product.price * product.count, 0);
 
         const discount = Array.from(this.activePromo).reduce((acc, promo) => acc + promo.bonus, 0);
 
         this.totalPriceOutput.innerText = `On cash register: ${count}$`;
         this.FinalPriceOutput.innerText = `Summary: ${Math.ceil(count * (1 - discount))}$`;
 
-    }
-
-    set input(list: item[]) {
-        this.products = list;
-
-        this.updatePrice();
     }
 
 

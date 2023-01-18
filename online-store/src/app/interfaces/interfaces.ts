@@ -12,6 +12,13 @@ export type product = {
     [index: string]: string | number | string[],
 }
 
+export type item = {
+    id: number;
+    product: product,
+    count: number
+};
+
+
 export interface Iproduct {
     category: string,
     brand: string,
@@ -26,10 +33,24 @@ export type productList = {
     limit: number,
 }
 
-export type item = {
-    product: product,
-    count: number
+
+export type critery = {
+    label: string;
+    type: string;
+    variants?: Set<string>;
+    range?: { from: number; to: number };
 };
+
+export type criteryList = {
+    [index: string]: critery;
+};
+
+
+export type updateTotal = {
+    count: number,
+    price: number,
+}
+
 
 export type updateAction = {
     product: product | item[];
@@ -48,6 +69,8 @@ export interface IMain {
     render(): string
 
     save?: () => void;
+
+    update?: () => void;
 
     inputActive?(active: item[], all?: product[]): void;
     inputProducts?(value: product[]): void;

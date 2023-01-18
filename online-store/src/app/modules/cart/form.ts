@@ -60,7 +60,7 @@ export const modalHtml = `
       </li>
       <li class="card-detail__item">
         <label class="card-detail__label">VALID
-         <input 
+        <input 
             class="card-detail__input" 
             type="text" 
             pattern="[0-9]{2}/[0-9]{2}" 
