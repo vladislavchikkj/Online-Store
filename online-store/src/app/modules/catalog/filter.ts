@@ -1,16 +1,6 @@
-import { IFilterCollection, critery, criteryList } from '../../interfaces/interfaces';
+import { IFilterCollection, criteryList } from '../../interfaces/interfaces';
 import { product } from '../../interfaces/interfaces';
 import { fakeDB } from '../external/fakeDB';
-
-
-
-type changeCritery = {
-    name: string;
-    type: string;
-    value?: string;
-    check?: boolean;
-    range?: { from: number; to: number };
-}
 
 export class Filter {
     private categories: criteryList = {
@@ -84,7 +74,7 @@ export class Filter {
     }
 
     enableHandler(): void {
-        this.container.addEventListener('filt_update', (e: CustomEventInit<critery>) => {
+        this.container.addEventListener('filt_update', () => {
             this.filters = {};
 
             const checkboxes = Array.from(document.querySelectorAll<HTMLInputElement>('[type="checkbox"]'))
@@ -123,12 +113,14 @@ export class Filter {
     select(): product[] {
         let products = this.fakeDB.getAll();
 
-        for (let filter in this.filters) {
+        for (const filter in this.filters) {
             if (this.filters[filter] instanceof Set)
-                products = products.filter((product) => (this.filters[filter] as Set<string>).has(`${product[filter]}`.toLowerCase()));
+                products = products.filter((product) =>
+                    (this.filters[filter] as Set<string>).has(`${product[filter]}`.toLowerCase())
+                );
             else {
-                let low = +(this.filters[filter] as number[])[0];
-                let high = +(this.filters[filter] as number[])[1];
+                const low = +(this.filters[filter] as number[])[0];
+                const high = +(this.filters[filter] as number[])[1];
                 products = products.filter((product) => low < +product[filter] && +product[filter] < high);
             }
         }
@@ -212,8 +204,12 @@ export class Filter {
                     hightout.textContent = `${high.value}$`;
                 });
 
-                low.addEventListener('change', () => { this.container.dispatchEvent(this.filtEvent); });
-                high.addEventListener('change', () => { this.container.dispatchEvent(this.filtEvent); });
+                low.addEventListener('change', () => {
+                    this.container.dispatchEvent(this.filtEvent);
+                });
+                high.addEventListener('change', () => {
+                    this.container.dispatchEvent(this.filtEvent);
+                });
             }
             //<p>(5/5)</p>
         }

@@ -1,4 +1,4 @@
-import { IMain, product, productList } from "../../interfaces/interfaces";
+import { IMain } from '../../interfaces/interfaces';
 
 export class ErrorPage implements IMain {
     private container: HTMLElement;
@@ -7,7 +7,6 @@ export class ErrorPage implements IMain {
         place.innerHTML = this.render();
 
         this.container = place.querySelector('.error-page') as HTMLElement;
-
     }
 
     render() {
@@ -21,4 +20,4 @@ export class ErrorPage implements IMain {
             </div>
         </div>`;
     }
-} 
+}

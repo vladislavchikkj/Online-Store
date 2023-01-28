@@ -1,8 +1,7 @@
-import { IFilterCollection, IMain, item, product, productList } from "../../interfaces/interfaces";
-import { fakeDB } from "../external/fakeDB";
-import { Loader } from "../external/loader";
-import { Filter } from "./filter";
-import { Products } from "./products";
+import { IFilterCollection, IMain } from '../../interfaces/interfaces';
+import { fakeDB } from '../external/fakeDB';
+import { Filter } from './filter';
+import { Products } from './products';
 
 export class Catalog implements IMain {
     private container: HTMLElement;
@@ -12,7 +11,6 @@ export class Catalog implements IMain {
     private dispay: Products;
 
     constructor(place: HTMLElement, fakeDB: fakeDB) {
-
         this.fakeDB = fakeDB;
 
         place.innerHTML = this.render();
@@ -25,21 +23,19 @@ export class Catalog implements IMain {
 
         this.update();
 
-        this.container.addEventListener('request_filt', (info: CustomEventInit) => {
+        this.container.addEventListener('request_filt', () => {
             const filterSet: IFilterCollection = this.filter.filterSet();
 
             this.dispay.display = this.fakeDB.select(filterSet);
         });
     }
-    save() { }
-
     update() {
         this.filter.filterConfig();
 
         const filterSet: IFilterCollection = this.filter.filterSet();
 
         this.dispay.display = this.fakeDB.select(filterSet);
-    };
+    }
 
     render() {
         return `<div class="catalog-page"></div>`;

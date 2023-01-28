@@ -1,8 +1,7 @@
-import { IFilterCollection, criteryList, item, product, productList } from "../../interfaces/interfaces";
-import { Loader } from "./loader";
+import { IFilterCollection, item, product, productList } from '../../interfaces/interfaces';
+import { Loader } from './loader';
 
 export class fakeDB {
-
     private loader = new Loader();
 
     private DB: product[] = [];
@@ -16,7 +15,7 @@ export class fakeDB {
         this.DB = (await this.loader.requestItems<productList>()).products;
 
         const localStore = localStorage.getItem('items') as string;
-        const idContainer: { id: number, count: number }[] = JSON.parse(localStore);
+        const idContainer: { id: number; count: number }[] = JSON.parse(localStore);
 
         if (!idContainer) return;
 
@@ -29,7 +28,7 @@ export class fakeDB {
                 id: saved.id,
                 count: saved.count,
                 product: finded,
-            }
+            };
 
             this.selected.push(item);
         });
@@ -48,11 +47,10 @@ export class fakeDB {
                 id: id,
                 product: addedPr,
                 count: 1,
-            }
+            };
             this.selected.push(addedIt);
-        }
-        else {
-            console.log("there are no any item to this ID");
+        } else {
+            console.log('there are no any item to this ID');
         }
         this.dispatchUpdate();
     }
@@ -70,9 +68,8 @@ export class fakeDB {
             updated.count += dif;
 
             this.selected = this.selected.filter((item) => item.count > 0);
-        }
-        else {
-            console.log("there are no any selected items to this ID");
+        } else {
+            console.log('there are no any selected items to this ID');
         }
 
         this.dispatchUpdate();
@@ -88,15 +85,17 @@ export class fakeDB {
     select(filters: IFilterCollection): product[] {
         let products = this.getAll();
 
-        for (let critery in filters) {
+        for (const critery in filters) {
             if (filters[critery] instanceof Set)
-                products = products.filter((product) => (filters[critery] as Set<string>).has(`${product[critery]}`.toLowerCase()));
+                products = products.filter((product) =>
+                    (filters[critery] as Set<string>).has(`${product[critery]}`.toLowerCase())
+                );
             else {
-                let low = +(filters[critery] as number[])[0];
-                let high = +(filters[critery] as number[])[1];
+                const low = +(filters[critery] as number[])[0];
+                const high = +(filters[critery] as number[])[1];
                 products = products.filter((product) => low < +product[critery] && +product[critery] < high);
             }
-            console.log(critery)
+            console.log(critery);
         }
         return products;
     }
@@ -110,25 +109,26 @@ export class fakeDB {
     }
 
     dispatchUpdate() {
-        document.dispatchEvent(new CustomEvent("update", {
-            bubbles: true,
-            detail: {
-                price: this.selected.reduce((acc, item) => acc + item.product.price * item.count, 0),
-                count: this.selected.reduce((acc, item) => acc + item.count, 0),
-            }
-        }));
+        document.dispatchEvent(
+            new CustomEvent('update', {
+                bubbles: true,
+                detail: {
+                    price: this.selected.reduce((acc, item) => acc + item.product.price * item.count, 0),
+                    count: this.selected.reduce((acc, item) => acc + item.count, 0),
+                },
+            })
+        );
     }
 
     enableSaveHandler() {
-        window.addEventListener("unload", () => {
+        window.addEventListener('unload', () => {
             const idArray = this.selected.map((item) => {
                 return {
                     id: item.product.id,
                     count: item.count,
-                }
+                };
             });
-            localStorage.setItem("items", JSON.stringify(idArray));
+            localStorage.setItem('items', JSON.stringify(idArray));
         });
     }
 }
-

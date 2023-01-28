@@ -1,13 +1,15 @@
 export class Loader {
-    private _addres: string = 'https://dummyjson.com/products';
+    private _addres = 'https://dummyjson.com/products';
     //private options: RequestInit = null;W
 
-    get addres() { return this._addres };
+    get addres() {
+        return this._addres;
+    }
 
     async requestItems<T>() {
         const responce = await fetch(this.addres);
 
-        if (!responce.ok) throw Error("bad request");
+        if (!responce.ok) throw Error('bad request');
 
         const result: T = await responce.json();
 
@@ -15,9 +17,9 @@ export class Loader {
     }
 
     async requestItem<T>(productId: string) {
-        const responce = await fetch(`${this.addres}/${productId}`)
+        const responce = await fetch(`${this.addres}/${productId}`);
 
-        if (!responce.ok) throw Error("bad request");
+        if (!responce.ok) throw Error('bad request');
 
         const result: T = await responce.json();
 
