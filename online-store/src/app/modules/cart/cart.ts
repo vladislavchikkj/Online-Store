@@ -1,8 +1,6 @@
 import { item } from '../../interfaces/interfaces';
 import { fakeDB } from '../external/fakeDB';
 
-
-
 export class Cart {
     private container: HTMLElement;
 
@@ -12,7 +10,6 @@ export class Cart {
     private fakeDB: fakeDB;
     private itemsPage: item[] = [];
 
-
     private countController: HTMLInputElement;
     private pageController: HTMLInputElement;
 
@@ -21,7 +18,7 @@ export class Cart {
 
         place.innerHTML = this.render();
 
-        this.container = place.querySelector(".items") as HTMLElement;
+        this.container = place.querySelector('.items') as HTMLElement;
 
         this.countController = place.querySelector('input#max-count') as HTMLInputElement;
         this.pageController = place.querySelector('input#page') as HTMLInputElement;
@@ -29,7 +26,6 @@ export class Cart {
         this.setOutputItems();
 
         this.addCountHandler();
-
 
         this.countController.addEventListener('input', () => {
             this.pageController.max = `${Math.ceil(this.fakeDB.getSelected().length / this.count)}`;
@@ -47,7 +43,10 @@ export class Cart {
 
         this.itemsPage = this.fakeDB.getSelected().slice(this.count * this.page, this.count * (this.page + 1));
 
-        this.container.innerHTML = this.itemsPage.reduce((acc, item, index) => acc + this.createItem(item, index + this.page * this.count), "");
+        this.container.innerHTML = this.itemsPage.reduce(
+            (acc, item, index) => acc + this.createItem(item, index + this.page * this.count),
+            ''
+        );
     }
 
     render(): string {
@@ -85,25 +84,22 @@ export class Cart {
                     <p class="item__price">Цена: ${item.product.price * item.count}</p>
                 </div>
             </aside>
-            `
+            `;
     }
     addCountHandler() {
         this.container.addEventListener('click', (e) => {
-            const itemCard = (e.target as HTMLElement).closest<HTMLElement>(".item");
+            const itemCard = (e.target as HTMLElement).closest<HTMLElement>('.item');
 
             if (!itemCard) return;
 
             const id = +(itemCard.dataset.id as string);
 
-            const button = (e.target as HTMLElement).closest<HTMLButtonElement>("button");
+            const button = (e.target as HTMLElement).closest<HTMLButtonElement>('button');
 
             if (button) {
-
-                if (button.value === "+") {
+                if (button.value === '+') {
                     this.fakeDB.updateCount(id, +1);
-
-                }
-                else if (button.value === "-") {
+                } else if (button.value === '-') {
                     this.fakeDB.updateCount(id, -1);
                 }
 
@@ -112,16 +108,12 @@ export class Cart {
 
                 this.pageController.max = `${max}`;
 
-                this.pageController.value = (this.page > max) ? `${max}` : `${this.page}`;
+                this.pageController.value = this.page > max ? `${max}` : `${this.page}`;
 
                 this.setOutputItems();
-            }
-            else {
+            } else {
                 window.location.hash = id ? `item-page/${id}` : '1';
             }
         });
     }
-
-
-
 }

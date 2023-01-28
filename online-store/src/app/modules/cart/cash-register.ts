@@ -1,9 +1,8 @@
 import { IMain } from '../../interfaces/interfaces';
 import { fakeDB } from '../external/fakeDB';
 
-import { Cart } from "./cart";
+import { Cart } from './cart';
 import { Reckoning } from './reckoning';
-
 
 export class СashRegister implements IMain {
     private fakeDB: fakeDB;
@@ -18,7 +17,7 @@ export class СashRegister implements IMain {
 
         place.innerHTML = this.render();
 
-        this.container = place.querySelector(".basket-page") as HTMLElement;
+        this.container = place.querySelector('.basket-page') as HTMLElement;
 
         this.cart = new Cart(this.container, this.fakeDB);
 
@@ -32,5 +31,4 @@ export class СashRegister implements IMain {
     render(): string {
         return `<div class="basket-page"></div>`;
     }
-
 }

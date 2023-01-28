@@ -1,8 +1,8 @@
-import { item, product } from "../../interfaces/interfaces";
-import { fakeDB } from "../external/fakeDB";
+import { item, product } from '../../interfaces/interfaces';
+import { fakeDB } from '../external/fakeDB';
 
 interface ISort {
-    (a: product, b: product): number
+    (a: product, b: product): number;
 }
 
 export class Products {
@@ -14,7 +14,6 @@ export class Products {
 
     private fakeDB: fakeDB;
     private displayed: product[] = [];
-
 
     private sortOption: ISort | undefined;
     private seachResult: HTMLInputElement | undefined;
@@ -34,7 +33,6 @@ export class Products {
     constructor(place: HTMLElement, fakeDB: fakeDB) {
         this.fakeDB = fakeDB;
 
-
         this.foundItems = 30;
 
         place.insertAdjacentHTML('beforeend', this.generate());
@@ -51,44 +49,37 @@ export class Products {
         this.currItems = place.querySelector('.item-card') as HTMLElement;
         this.sizeItemBtn = place.querySelector('.view-mode') as HTMLElement;
 
-
         this.sizeItemBtn.addEventListener('click', (e) => {
-            let btn = (e.target as HTMLElement);
+            const btn = e.target as HTMLElement;
             if (btn.className === 'big-v') {
                 this.items.classList.add('active');
-            }
-            else if (btn.className === 'small-v') {
+            } else if (btn.className === 'small-v') {
                 this.items.classList.remove('active');
             }
-
         });
         this.items.addEventListener('click', (e) => {
             const item = (e.target as HTMLElement).closest<HTMLElement>('.item__wrapper');
             const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.buttons__i');
 
             if (item) {
-                const ID = item.dataset.id as string
-                window.location.hash = ID ? `item-page/${ID}` : 'error-page'
-            };
+                const ID = item.dataset.id as string;
+                window.location.hash = ID ? `item-page/${ID}` : 'error-page';
+            }
 
-
-            if (btn?.name === "add") {
+            if (btn?.name === 'add') {
                 const ID: number = +(btn.dataset.id as string);
 
                 if (!this.choisedBox.has(ID)) {
                     this.choisedBox.add(ID);
                     this.fakeDB.add(ID);
-                }
-                else {
+                } else {
                     this.choisedBox.delete(ID);
                     this.fakeDB.delete(ID);
                 }
 
                 btn.classList.toggle('drop');
-                btn.textContent = (!btn.classList.contains('drop')) ? 'Add' : 'Drop';
-
-            }
-            else if (btn?.name === "details") {
+                btn.textContent = !btn.classList.contains('drop') ? 'Add' : 'Drop';
+            } else if (btn?.name === 'details') {
                 const ID = btn.dataset.id as string;
 
                 window.location.hash = ID ? `item-page/${ID}` : '1';
@@ -96,7 +87,7 @@ export class Products {
         });
 
         this.panel.addEventListener('click', () => {
-            this.toggleSortOptionMenu()
+            this.toggleSortOptionMenu();
         });
 
         this.dropMenu.addEventListener('click', (e) => {
@@ -115,20 +106,18 @@ export class Products {
     }
 
     private sortSelect(option: string): ISort {
-        if (option === 'rating')
-            return (a, b) => b.rating - a.rating;
+        if (option === 'rating') return (a, b) => b.rating - a.rating;
         return (a, b) => a.price - b.price;
     }
 
     private addHandler(input: HTMLElement) {
-        input.addEventListener("input", (e: Event) => {
+        input.addEventListener('input', () => {
             this.output();
         });
     }
     protected showFoundItem(found: number) {
-        this.foundItemsPlace.innerText = `Found: ${found} `
+        this.foundItemsPlace.innerText = `Found: ${found} `;
     }
-
 
     generate = () => `
         <div class="products">
@@ -152,7 +141,7 @@ export class Products {
             <div class="products__items">
             </div>
         </div>
-        `
+        `;
 
     set display(products: product[]) {
         this.displayed = products;
@@ -163,20 +152,20 @@ export class Products {
         this.choisedBox = new Set<number>(active.map((item) => item.id));
     }
 
-
     public output() {
-        const searched = this.searchForm.value.toLocaleLowerCase()
+        const searched = this.searchForm.value.toLocaleLowerCase();
 
-        const output = this.displayed.filter((item) => item.title.toLocaleLowerCase().includes(searched))
+        const output = this.displayed
+            .filter((item) => item.title.toLocaleLowerCase().includes(searched))
             .sort(this.sortOption); // filter there
-        this.container.innerHTML = output.reduce((acc, item, index) => acc + this.createItem(item), '');
-        this.foundItems = output.length
+        this.container.innerHTML = output.reduce((acc, item) => acc + this.createItem(item), '');
+        this.foundItems = output.length;
         this.showFoundItem(output.length);
     }
 
     createItem = (product: product) => {
-        const nameButton = (this.choisedBox.has(product.id)) ? `Drop` : `Add`;
-        const dropstyle = (this.choisedBox.has(product.id)) ? `drop` : ``;
+        const nameButton = this.choisedBox.has(product.id) ? `Drop` : `Add`;
+        const dropstyle = this.choisedBox.has(product.id) ? `drop` : ``;
 
         return `<a class="item-card">
             <div class="item__wrapper" data-id = "${product.id}">
@@ -196,16 +185,18 @@ export class Products {
                 <button data-id = "${product.id}" name="add" class="buttons__i ${dropstyle}">${nameButton}</button>
                 <button data-id = "${product.id}" name="details" class="buttons__i">Detail</button>
             </div>
-        </a>`
-    }
+        </a>`;
+    };
     toggleSortOptionMenu() {
-        this.dropMenu.classList.toggle("show");
+        this.dropMenu.classList.toggle('show');
     }
 
     closeSortOptionMenu(event: Event) {
         const target = (event.target as HTMLElement).closest('.dropbtn');
 
-        if (!target) { this.dropMenu.classList.remove('show'); }
+        if (!target) {
+            this.dropMenu.classList.remove('show');
+        }
     }
     /*
     get getChoised(): product[] {

@@ -7,7 +7,9 @@
     "start": "webpack serve --config webpack.config.js",
     "build-dev": "webpack",
     "build-prod": "webpack --node-env=production",
-    "clear": "rd /s /q dist"
+    "clear": "rd /s /q dist",
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "eslint . --ext .ts --fix"
   },
   "keywords": [],
   "author": "",

@@ -1,10 +1,7 @@
-import { Header } from "./components/header";
-import { Footer } from "./components/footer";
-import { Main } from "./components/main";
-import { fakeDB } from "./modules/external/fakeDB";
-
-
-
+import { Header } from './components/header';
+import { Footer } from './components/footer';
+import { Main } from './components/main';
+import { fakeDB } from './modules/external/fakeDB';
 
 class App {
     private fakeDB: fakeDB;
@@ -12,7 +9,6 @@ class App {
     private header: Header;
     private main: Main;
     private footer: Footer;
-
 
     private container: HTMLElement;
 
@@ -25,7 +21,7 @@ class App {
             this.container = document.body.children[0] as HTMLElement;
         }
         this.header = new Header(this.container, this.fakeDB);
-        this.main = new Main(this.container, this.fakeDB)
+        this.main = new Main(this.container, this.fakeDB);
         this.footer = new Footer(this.container);
     }
 }

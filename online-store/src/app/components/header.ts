@@ -1,4 +1,4 @@
-import { fakeDB } from "../modules/external/fakeDB";
+import { fakeDB } from '../modules/external/fakeDB';
 
 export class Header {
     private fakeDB: fakeDB;
@@ -14,11 +14,10 @@ export class Header {
         this.cartCountOutput = document.querySelector('.number-elemenst') as HTMLElement;
         this.cartPriceOutput = document.querySelector('.total-num') as HTMLElement;
 
-        document.addEventListener("update", () => {
+        document.addEventListener('update', () => {
             this.updateTotalCart();
         });
     }
-
 
     render() {
         return `
@@ -49,4 +48,4 @@ export class Header {
         this.cartCountOutput.innerText = `${count}`;
         this.cartPriceOutput.innerText = `${price}`;
     }
-} 
+}

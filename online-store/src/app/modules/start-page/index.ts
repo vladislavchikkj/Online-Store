@@ -1,4 +1,4 @@
-import { IMain, product, productList } from "../../interfaces/interfaces";
+import { IMain } from '../../interfaces/interfaces';
 
 export class StartPage implements IMain {
     private container: HTMLElement;
@@ -7,7 +7,6 @@ export class StartPage implements IMain {
         place.innerHTML = this.render();
 
         this.container = place.querySelector('.main-page') as HTMLElement;
-
     }
 
     render() {
@@ -20,4 +19,4 @@ export class StartPage implements IMain {
             <div class="catalog"></div>
         </div></div>`;
     }
-} 
+}

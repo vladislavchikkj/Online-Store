@@ -1,6 +1,5 @@
 export class Footer {
-
-    constructor(place: HTMLElement, lang: string = "ru") {
+    constructor(place: HTMLElement) {
         place.insertAdjacentHTML('beforeend', this.render());
     }
 

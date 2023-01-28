@@ -1,6 +1,5 @@
-import { IMain, product } from "../../interfaces/interfaces";
-import { Products } from "../catalog/products";
-import { fakeDB } from "../external/fakeDB";
+import { IMain, product } from '../../interfaces/interfaces';
+import { fakeDB } from '../external/fakeDB';
 
 export class ItemPage implements IMain {
     //private ID: string;
@@ -43,19 +42,22 @@ export class ItemPage implements IMain {
         this.addButton = this.container.querySelector('.add-button') as HTMLButtonElement;
 
         this.imageCard.addEventListener('click', (e) => {
-            let item = (e.target as HTMLElement);
-            (this.currImageCard as HTMLElement).style.backgroundImage = `${item.style.backgroundImage}`
+            const item = e.target as HTMLElement;
+            (this.currImageCard as HTMLElement).style.backgroundImage = `${item.style.backgroundImage}`;
         });
 
         this.addButton.addEventListener('click', () => {
-            if (!this.added) { this.fakeDB.add(this.dataId); }
-            else { this.fakeDB.delete(this.dataId); }
+            if (!this.added) {
+                this.fakeDB.add(this.dataId);
+            } else {
+                this.fakeDB.delete(this.dataId);
+            }
 
             this.added = !this.added;
 
-            const buttomText = (!this.added) ? "Add to cart" : "Delete from cart";
+            const buttomText = !this.added ? 'Add to cart' : 'Delete from cart';
             (this.addButton as HTMLButtonElement).innerText = buttomText;
-        })
+        });
     }
 
     render() {
@@ -69,9 +71,12 @@ export class ItemPage implements IMain {
 
         images.length = 3;
 
-        const slides = images.reduce((slider, image) => slider + `<div class="item-image" style="background-image: url(${image})"></div>`, "");
+        const slides = images.reduce(
+            (slider, image) => slider + `<div class="item-image" style="background-image: url(${image})"></div>`,
+            ''
+        );
 
-        const buttonName = (!this.added) ? "Add to cart" : "Delete from cart";
+        const buttonName = !this.added ? 'Add to cart' : 'Delete from cart';
 
         return `            
             <div class="item-page__path">store  &nbsp &#8594 &nbsp ${this.product.category} &#8594 &nbsp${this.product.brand} &#8594 &nbsp${this.product.title}</div>
@@ -103,6 +108,6 @@ export class ItemPage implements IMain {
                         </div>
                     </div>
                 </div>
-            </div>`
+            </div>`;
     }
-} 
+}
