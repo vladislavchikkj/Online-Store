@@ -66,9 +66,6 @@ export interface IMain {
     save?: () => void;
 
     update?: () => void;
-
-    inputActive?(active: item[], all?: product[]): void;
-    inputProducts?(value: product[]): void;
 }
 
 export interface IFilterCollection {
