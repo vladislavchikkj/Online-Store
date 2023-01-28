@@ -1,0 +1,43 @@
+import { IFilterCollection, IMain } from '../../interfaces/interfaces';
+import { fakeDB } from '../external/fakeDB';
+import { Filter } from './filter';
+import { Products } from './products';
+
+export class Catalog implements IMain {
+    private container: HTMLElement;
+
+    private fakeDB: fakeDB;
+    private filter: Filter;
+    private dispay: Products;
+
+    constructor(place: HTMLElement, fakeDB: fakeDB) {
+        this.fakeDB = fakeDB;
+
+        place.innerHTML = this.render();
+
+        this.container = place.querySelector('.catalog-page') as HTMLElement;
+
+        this.filter = new Filter(this.container, this.fakeDB);
+
+        this.dispay = new Products(this.container, this.fakeDB);
+
+        this.update();
+
+        this.container.addEventListener('request_filt', () => {
+            const filterSet: IFilterCollection = this.filter.filterSet();
+
+            this.dispay.display = this.fakeDB.select(filterSet);
+        });
+    }
+    update() {
+        this.filter.filterConfig();
+
+        const filterSet: IFilterCollection = this.filter.filterSet();
+
+        this.dispay.display = this.fakeDB.select(filterSet);
+    }
+
+    render() {
+        return `<div class="catalog-page"></div>`;
+    }
+}
